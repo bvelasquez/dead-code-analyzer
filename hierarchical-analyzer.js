@@ -88,6 +88,7 @@ function extractReExports(filePath) {
       /export\s+\{[^}]*\}\s+from\s+['"]([^'"]+)['"]/g, // export { Component } from "./Component"
       /export\s+\*\s+from\s+['"]([^'"]+)['"]/g, // export * from "./Component"
       /export\s+\{\s*default\s+as\s+\w+\s*\}\s+from\s+['"]([^'"]+)['"]/g, // export { default as Component } from "./Component"
+      /export\s+type\s+\{[^}]*\}\s+from\s+['"]([^'"]+)['"]/g, // export type { TypeName } from "./module"
     ];
 
     exportPatterns.forEach((pattern) => {

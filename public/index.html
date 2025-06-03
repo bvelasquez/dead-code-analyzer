@@ -28,22 +28,12 @@
             />
             <select id="quickTargets">
               <option value="">-- Quick Select --</option>
-              <option
-                value="/Users/barryvelasquez/projects/mighty45-web/apps/coach-console"
-              >
-                coach-console
-              </option>
-              <option
-                value="/Users/barryvelasquez/projects/mighty45-web/apps/m45-admin"
-              >
-                m45-admin
-              </option>
-              <option value="/Users/barryvelasquez/projects/mighty45-web">
-                entire project
-              </option>
             </select>
             <button class="btn btn-success" id="setTargetBtn">
               Set Target & Analyze
+            </button>
+            <button class="btn btn-secondary" id="manageRecentBtn" title="Manage recent directories">
+              📂
             </button>
           </div>
           <div class="current-target" id="currentTarget">
@@ -106,6 +96,25 @@
     </div>
 
     <div id="notification" class="notification"></div>
+
+    <!-- Recent Directories Management Modal -->
+    <div id="recentDirsModal" class="modal" style="display: none;">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h3>📂 Manage Recent Target Directories</h3>
+          <button class="modal-close" onclick="closeRecentDirsModal()">&times;</button>
+        </div>
+        <div class="modal-body">
+          <div id="recentDirsList" class="recent-dirs-list">
+            <!-- Recent directories will be populated here -->
+          </div>
+          <div class="modal-actions">
+            <button class="btn btn-danger" onclick="clearAllRecentDirs()">Clear All</button>
+            <button class="btn btn-secondary" onclick="closeRecentDirsModal()">Close</button>
+          </div>
+        </div>
+      </div>
+    </div>
 
     <!-- Loading indicator -->
     <div id="loadingIndicator" class="loading-overlay" style="display: none">

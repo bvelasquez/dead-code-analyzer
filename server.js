@@ -210,32 +210,58 @@ const server = http.createServer(async (req, res) => {
           filePaths.forEach((filePath) => {
             const extensions = [".js", ".jsx", ".ts", ".tsx"];
             let deleted = false;
+            const attemptedPaths = [];
 
-            // Try with src/ prefix first
-            for (const ext of extensions) {
-              const fullPath = path.join(
-                currentTargetDir,
-                "src",
-                filePath + ext,
-              );
+            // Helper function to try deleting a file path
+            const tryDelete = (fullPath) => {
+              attemptedPaths.push(fullPath);
               if (fs.existsSync(fullPath)) {
                 fs.unlinkSync(fullPath);
                 results.push({ file: filePath, success: true });
-                deleted = true;
-                break;
+                return true;
               }
+              return false;
+            };
+
+            // Strategy 1: Try the path as-is (in case it already includes everything)
+            if (tryDelete(path.join(currentTargetDir, filePath))) {
+              deleted = true;
             }
 
-            // Try without src/ prefix
-            if (!deleted) {
+            // Strategy 2: Try with different extensions if no extension present
+            if (!deleted && !path.extname(filePath)) {
+              // Try with src/ prefix first
               for (const ext of extensions) {
-                const altPath = path.join(currentTargetDir, filePath + ext);
-                if (fs.existsSync(altPath)) {
-                  fs.unlinkSync(altPath);
-                  results.push({ file: filePath, success: true });
+                if (
+                  tryDelete(path.join(currentTargetDir, "src", filePath + ext))
+                ) {
                   deleted = true;
                   break;
                 }
+              }
+
+              // Try without src/ prefix
+              if (!deleted) {
+                for (const ext of extensions) {
+                  if (tryDelete(path.join(currentTargetDir, filePath + ext))) {
+                    deleted = true;
+                    break;
+                  }
+                }
+              }
+            }
+
+            // Strategy 3: If filePath already starts with src/, try without the extra src/
+            if (!deleted && filePath.startsWith("src/")) {
+              if (tryDelete(path.join(currentTargetDir, filePath))) {
+                deleted = true;
+              }
+            }
+
+            // Strategy 4: If filePath doesn't start with src/, try adding it
+            if (!deleted && !filePath.startsWith("src/")) {
+              if (tryDelete(path.join(currentTargetDir, "src", filePath))) {
+                deleted = true;
               }
             }
 
@@ -243,7 +269,7 @@ const server = http.createServer(async (req, res) => {
               results.push({
                 file: filePath,
                 success: false,
-                error: "File not found",
+                error: `File not found. Tried: ${attemptedPaths.join(", ")}`,
               });
             }
           });

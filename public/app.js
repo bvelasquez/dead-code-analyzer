@@ -4,13 +4,17 @@ let currentAnalysisData = null;
 let currentView = "detailed";
 let currentTargetDir = null;
 
+// Target directory history management
+const MAX_RECENT_DIRS = 10; // Maximum number of recent directories to store
+
 // Initialize the application
 document.addEventListener("DOMContentLoaded", function () {
   getCurrentTargetDir();
   loadAnalysisData();
   restoreViewPreference();
+  updateQuickTargetsDropdown(); // Populate recent directories
   setupEventListeners();
-  setupAutoRefresh();
+  // setupAutoRefresh(); // Commented out to stop auto-loading
 });
 
 // Get the current target directory from the server
@@ -78,6 +82,9 @@ async function setTargetDirectoryAndAnalyze() {
     currentTargetDir = newTargetDir;
     updateTargetDirectoryDisplay();
 
+    // Save to recent targets
+    saveRecentTargetDir(newTargetDir);
+
     // Reload the analysis data
     await loadAnalysisData();
   } catch (error) {
@@ -125,6 +132,11 @@ function setupEventListeners() {
   document
     .getElementById("setTargetBtn")
     .addEventListener("click", setTargetDirectoryAndAnalyze);
+
+  // Manage recent directories button
+  document
+    .getElementById("manageRecentBtn")
+    .addEventListener("click", showManageRecentDialog);
 
   // Quick target selection dropdown
   document
@@ -348,7 +360,9 @@ function updateEntryPointsSection(entryPoints) {
         <h4>🚀 Analysis Entry Points (${entryPoints.length})</h4>
         <p>These are the starting points used for the dependency analysis. All reachable files must have a path from one of these entry points:</p>
         <div class="entry-points-grid">
-            ${entryPoints.map((ep) => `<div class="entry-point-item">📍 ${ep}</div>`).join("")}
+            ${entryPoints
+              .map((ep) => `<div class="entry-point-item">📍 ${ep}</div>`)
+              .join("")}
         </div>
     `;
 }
@@ -368,7 +382,9 @@ function updateFileContent(data) {
   }
 
   container.innerHTML = `
-        <div class="detailed-view ${currentView === "detailed" ? "active" : ""}">
+        <div class="detailed-view ${
+          currentView === "detailed" ? "active" : ""
+        }">
             ${generateDetailedView(data)}
         </div>
         <div class="compact-view ${currentView === "compact" ? "active" : ""}">
@@ -444,14 +460,20 @@ function generateCompactView(data) {
     <div class="compact-header">
       <div class="compact-summary">
         <div class="compact-stats">
-          <span class="stat-compact danger">${data.categories.orphaned.length} Orphaned Files</span>
-          <span class="stat-compact warning">${data.categories["transitive-dead-code"].length} Transitive Files</span>
+          <span class="stat-compact danger">${
+            data.categories.orphaned.length
+          } Orphaned Files</span>
+          <span class="stat-compact warning">${
+            data.categories["transitive-dead-code"].length
+          } Transitive Files</span>
           <span class="stat-compact safe">${falsePositives} False Positives</span>
           <span class="stat-compact total">${totalDeadFiles} Total Dead Files</span>
         </div>
         <div class="compact-quick-stats">
           <span class="quick-stat">${deletableFiles} files can be safely deleted</span>
-          <span class="quick-stat">${Math.round((deletableFiles / totalSize) * 100)}% cleanup potential</span>
+          <span class="quick-stat">${Math.round(
+            (deletableFiles / totalSize) * 100,
+          )}% cleanup potential</span>
         </div>
       </div>
       
@@ -515,10 +537,14 @@ function generateCompactListView(data) {
         <div class="category-section" data-category="${category.className}">
           <div class="category-section-header">
             <h3 class="category-title ${category.priority}">
-              ${category.name} <span class="file-count">(${category.files.length})</span>
+              ${category.name} <span class="file-count">(${
+        category.files.length
+      })</span>
             </h3>
             <p class="category-description">${category.description}</p>
-            <button class="category-select-all-btn" onclick="selectAllInCategory('${category.className}')" title="Select all ${category.className} files">
+            <button class="category-select-all-btn" onclick="selectAllInCategory('${
+              category.className
+            }')" title="Select all ${category.className} files">
               Select All ${category.files.length}
             </button>
           </div>
@@ -527,14 +553,21 @@ function generateCompactListView(data) {
               .map(([path, files]) => {
                 const pathDisplayName = getPathDisplayName(path);
                 return `
-                <div class="path-tile ${category.className}" data-path="${path}">
+                <div class="path-tile ${
+                  category.className
+                }" data-path="${path}">
                   <div class="path-tile-header">
                     <div class="path-info">
                       <h4 class="path-name" title="${path}">${pathDisplayName}</h4>
-                      <span class="file-count-badge">${files.length} file${files.length > 1 ? "s" : ""}</span>
+                      <span class="file-count-badge">${files.length} file${
+                  files.length > 1 ? "s" : ""
+                }</span>
                     </div>
                     <div class="path-actions">
-                      <button class="path-select-all" onclick="selectAllInPath('${path.replace(/'/g, "\\'")}')" title="Select all files in this directory">
+                      <button class="path-select-all" onclick="selectAllInPath('${path.replace(
+                        /'/g,
+                        "\\'",
+                      )}')"" title="Select all files in this directory">
                         Select All
                       </button>
                     </div>
@@ -616,20 +649,34 @@ function generateCompactListView(data) {
                         };
 
                         return `
-                        <div class="file-tile ${category.className}" data-file="${file}" data-filename="${fullFileName.toLowerCase()}">
+                        <div class="file-tile ${
+                          category.className
+                        }" data-file="${file}" data-filename="${fullFileName.toLowerCase()}">
                           <div class="file-tile-content">
                             <div class="file-checkbox-wrapper">
-                              <input type="checkbox" class="file-checkbox" data-file="${file}" id="cb-${file.replace(/[^a-zA-Z0-9]/g, "_")}">
+                              <input type="checkbox" class="file-checkbox" data-file="${file}" id="cb-${file.replace(
+                          /[^a-zA-Z0-9]/g,
+                          "_",
+                        )}">
                             </div>
-                            <div class="file-icon" data-ext="${fileExt.toLowerCase()}">${getFileIcon(fileExt, file)}</div>
+                            <div class="file-icon" data-ext="${fileExt.toLowerCase()}">${getFileIcon(
+                          fileExt,
+                          file,
+                        )}</div>
                             <div class="file-info">
                               <span class="file-name" title="${file}">${fileName}</span>
                             </div>
                             <div class="file-actions">
-                              <button class="file-action-btn view-btn" title="View details" onclick="showFileDetailsModal('${file.replace(/'/g, "\\'")}')">
+                              <button class="file-action-btn view-btn" title="View details" onclick="showFileDetailsModal('${file.replace(
+                                /'/g,
+                                "\\'",
+                              )}')">
                                 👁️
                               </button>
-                              <button class="file-action-btn copy-btn" title="Copy path" onclick="copyToClipboard('${file.replace(/'/g, "\\'")}')">
+                              <button class="file-action-btn copy-btn" title="Copy path" onclick="copyToClipboard('${file.replace(
+                                /'/g,
+                                "\\'",
+                              )}')">
                                 📋
                               </button>
                             </div>
@@ -733,7 +780,9 @@ function generateCompactTableView(data) {
 
       html += `
         <h3 class="compact-table-category ${category.priority}">
-          ${category.name} <span class="file-count">(${category.files.length})</span>
+          ${category.name} <span class="file-count">(${
+        category.files.length
+      })</span>
         </h3>
         <p class="category-description">${category.description}</p>
         
@@ -770,23 +819,37 @@ function generateCompactTableView(data) {
                 const filePath = file.substring(0, file.lastIndexOf("/"));
 
                 return `
-                <tr class="compact-table-row ${category.className}" data-file="${file}" data-filename="${fullFileName.toLowerCase()}">
+                <tr class="compact-table-row ${
+                  category.className
+                }" data-file="${file}" data-filename="${fullFileName.toLowerCase()}">
                   <td>
-                    <input type="checkbox" class="file-checkbox file-checkbox-table" data-file="${file}" id="tbl-${file.replace(/[^a-zA-Z0-9]/g, "_")}">
+                    <input type="checkbox" class="file-checkbox file-checkbox-table" data-file="${file}" id="tbl-${file.replace(
+                  /[^a-zA-Z0-9]/g,
+                  "_",
+                )}">
                   </td>
                   <td>
                     <div class="file-name-cell">
-                      <div class="file-icon-small" data-ext="${fileExt.toLowerCase()}">${getFileIcon(fileExt, file)}</div>
+                      <div class="file-icon-small" data-ext="${fileExt.toLowerCase()}">${getFileIcon(
+                  fileExt,
+                  file,
+                )}</div>
                       <span>${fileName}</span>
                     </div>
                   </td>
                   <td class="file-path-cell">${filePath}</td>
                   <td>
                     <div class="file-action-cell">
-                      <button class="table-action-btn view-btn" title="View details" onclick="showFileDetailsModal('${file.replace(/'/g, "\\'")}')">
+                      <button class="table-action-btn view-btn" title="View details" onclick="showFileDetailsModal('${file.replace(
+                        /'/g,
+                        "\\'",
+                      )}')">
                         👁️
                       </button>
-                      <button class="table-action-btn copy-btn" title="Copy path" onclick="copyToClipboard('${file.replace(/'/g, "\\'")}')">
+                      <button class="table-action-btn copy-btn" title="Copy path" onclick="copyToClipboard('${file.replace(
+                        /'/g,
+                        "\\'",
+                      )}')">
                         📋
                       </button>
                     </div>
@@ -976,21 +1039,33 @@ function renderTableRowsBatch(tableId, category) {
 
       row.innerHTML = `
         <td>
-          <input type="checkbox" class="file-checkbox file-checkbox-table" data-file="${file}" id="tbl-${file.replace(/[^a-zA-Z0-9]/g, "_")}">
+          <input type="checkbox" class="file-checkbox file-checkbox-table" data-file="${file}" id="tbl-${file.replace(
+        /[^a-zA-Z0-9]/g,
+        "_",
+      )}">
         </td>
         <td>
           <div class="file-name-cell">
-            <div class="file-icon-small" data-ext="${fileExt.toLowerCase()}">${getFileIcon(fileExt, file)}</div>
+            <div class="file-icon-small" data-ext="${fileExt.toLowerCase()}">${getFileIcon(
+        fileExt,
+        file,
+      )}</div>
             <span>${fileName}</span>
           </div>
         </td>
         <td class="file-path-cell">${filePath}</td>
         <td>
           <div class="file-action-cell">
-            <button class="table-action-btn view-btn" title="View details" onclick="showFileDetailsModal('${file.replace(/'/g, "\\'")}')">
+            <button class="table-action-btn view-btn" title="View details" onclick="showFileDetailsModal('${file.replace(
+              /'/g,
+              "\\'",
+            )}')">
               👁️
             </button>
-            <button class="table-action-btn copy-btn" title="Copy path" onclick="copyToClipboard('${file.replace(/'/g, "\\'")}')">
+            <button class="table-action-btn copy-btn" title="Copy path" onclick="copyToClipboard('${file.replace(
+              /'/g,
+              "\\'",
+            )}')">
               📋
             </button>
           </div>
@@ -1028,17 +1103,25 @@ function generateFileSection(title, files, className, showDetails) {
                 <div class="file-header">
                     <input type="checkbox" class="file-checkbox" data-file="${file}" />
                     <span class="file-name">${file}</span>
-                    <span class="file-summary">${analysis?.summary || "No analysis"}</span>
+                    <span class="file-summary">${
+                      analysis?.summary || "No analysis"
+                    }</span>
                 </div>
                 ${
                   showDetails && sampleChain
                     ? `
                     <div class="file-details">
                         <strong>Dependency Chain:</strong>
-                        <div class="chain-path">${sampleChain.path.join(" ← ")}</div>
+                        <div class="chain-path">${sampleChain.path.join(
+                          " ← ",
+                        )}</div>
                         <div class="chain-info">
                             Root: ${sampleChain.rootFile} 
-                            (${sampleChain.isRootReachable ? "reachable" : "unreachable"})
+                            (${
+                              sampleChain.isRootReachable
+                                ? "reachable"
+                                : "unreachable"
+                            })
                         </div>
                     </div>
                 `
@@ -1117,17 +1200,25 @@ function renderFilesBatch(sectionId, files, className, showDetails) {
               <div class="file-header">
                   <input type="checkbox" class="file-checkbox" data-file="${file}" />
                   <span class="file-name">${file}</span>
-                  <span class="file-summary">${analysis?.summary || "No analysis"}</span>
+                  <span class="file-summary">${
+                    analysis?.summary || "No analysis"
+                  }</span>
               </div>
               ${
                 showDetails && sampleChain
                   ? `
                   <div class="file-details">
                       <strong>Dependency Chain:</strong>
-                      <div class="chain-path">${sampleChain.path.join(" ← ")}</div>
+                      <div class="chain-path">${sampleChain.path.join(
+                        " ← ",
+                      )}</div>
                       <div class="chain-info">
                           Root: ${sampleChain.rootFile} 
-                          (${sampleChain.isRootReachable ? "reachable" : "unreachable"})
+                          (${
+                            sampleChain.isRootReachable
+                              ? "reachable"
+                              : "unreachable"
+                          })
                       </div>
                   </div>
               `
@@ -1148,32 +1239,428 @@ function renderFilesBatch(sectionId, files, className, showDetails) {
   renderNextBatch();
 }
 
-// Add event listeners to file checkboxes
-function addFileEventListeners() {
+// Show manage recent directories dialog
+function showManageRecentDialog() {
+  const recent = getRecentTargetDirs();
+  const modal = document.getElementById("recentDirsModal");
+  const recentDirsList = document.getElementById("recentDirsList");
+
+  if (recent.length === 0) {
+    recentDirsList.innerHTML = `
+      <div class="empty-recent">
+        <p>No recent target directories found</p>
+        <p>Start analyzing some projects to build your recent list!</p>
+      </div>
+    `;
+  } else {
+    recentDirsList.innerHTML = recent
+      .map(
+        (dir) => `
+      <div class="recent-dir-item">
+        <div class="recent-dir-info">
+          <div class="recent-dir-name">${dir.displayName}</div>
+          <div class="recent-dir-path">${dir.path}</div>
+          <div class="recent-dir-date">Last used: ${new Date(
+            dir.lastUsed,
+          ).toLocaleString()}</div>
+        </div>
+        <div class="recent-dir-actions">
+          <button class="recent-dir-btn use" onclick="useRecentDir('${dir.path.replace(
+            /'/g,
+            "\\'",
+          )}')">
+            Use
+          </button>
+          <button class="recent-dir-btn remove" onclick="removeRecentDir('${dir.path.replace(
+            /'/g,
+            "\\'",
+          )}')">
+            Remove
+          </button>
+        </div>
+      </div>
+    `,
+      )
+      .join("");
+  }
+
+  modal.style.display = "flex";
+}
+
+// Get recent target directories from localStorage
+function getRecentTargetDirs() {
+  try {
+    const recent = localStorage.getItem("deadCodeAnalyzer.recentTargetDirs");
+    return recent ? JSON.parse(recent) : [];
+  } catch (error) {
+    console.error("Error loading recent target directories:", error);
+    return [];
+  }
+}
+
+// Save a target directory to recent list
+function saveRecentTargetDir(targetDir) {
+  try {
+    let recent = getRecentTargetDirs();
+
+    // Remove if already exists (to move to top)
+    recent = recent.filter((dir) => dir.path !== targetDir);
+
+    // Add to beginning
+    recent.unshift({
+      path: targetDir,
+      lastUsed: new Date().toISOString(),
+      displayName: getDisplayNameForPath(targetDir),
+    });
+
+    // Keep only the most recent entries
+    recent = recent.slice(0, MAX_RECENT_DIRS);
+
+    localStorage.setItem(
+      "deadCodeAnalyzer.recentTargetDirs",
+      JSON.stringify(recent),
+    );
+
+    // Update the dropdown
+    updateQuickTargetsDropdown();
+  } catch (error) {
+    console.error("Error saving recent target directory:", error);
+  }
+}
+
+// Remove a target directory from recent list
+function removeRecentTargetDir(targetDir) {
+  try {
+    let recent = getRecentTargetDirs();
+    recent = recent.filter((dir) => dir.path !== targetDir);
+    localStorage.setItem(
+      "deadCodeAnalyzer.recentTargetDirs",
+      JSON.stringify(recent),
+    );
+    updateQuickTargetsDropdown();
+  } catch (error) {
+    console.error("Error removing recent target directory:", error);
+  }
+}
+
+// Get a friendly display name for a path
+function getDisplayNameForPath(fullPath) {
+  const parts = fullPath.split("/");
+  if (parts.length <= 2) return fullPath;
+
+  // Show last 2-3 directory segments for readability
+  const lastParts = parts.slice(-3);
+  return `.../${lastParts.join("/")}`;
+}
+
+// Update the quick targets dropdown with recent directories
+function updateQuickTargetsDropdown() {
+  const dropdown = document.getElementById("quickTargets");
+  if (!dropdown) return;
+
+  const recent = getRecentTargetDirs();
+
+  // Clear existing options except the first one
+  dropdown.innerHTML = '<option value="">-- Quick Select --</option>';
+
+  // Add recent directories section
+  if (recent.length > 0) {
+    const recentGroup = document.createElement("optgroup");
+    recentGroup.label = `📅 Recent (${recent.length})`;
+
+    recent.forEach((dir, index) => {
+      const option = document.createElement("option");
+      option.value = dir.path;
+      option.textContent = `${dir.displayName}`;
+      option.title = `${dir.path}\nLast used: ${new Date(
+        dir.lastUsed,
+      ).toLocaleString()}`; // Full path and timestamp on hover
+      recentGroup.appendChild(option);
+    });
+
+    dropdown.appendChild(recentGroup);
+  }
+
+  // Add predefined common directories
+  const commonGroup = document.createElement("optgroup");
+  commonGroup.label = "🚀 Common Projects";
+
+  const commonDirs = [
+    {
+      path: "/Users/barryvelasquez/projects/mighty45-web/apps/coach-console",
+      name: "coach-console",
+    },
+    {
+      path: "/Users/barryvelasquez/projects/mighty45-web/apps/m45-admin",
+      name: "m45-admin",
+    },
+    {
+      path: "/Users/barryvelasquez/projects/mighty45-web",
+      name: "entire project",
+    },
+  ];
+
+  commonDirs.forEach((dir) => {
+    const option = document.createElement("option");
+    option.value = dir.path;
+    option.textContent = dir.name;
+    commonGroup.appendChild(option);
+  });
+
+  dropdown.appendChild(commonGroup);
+}
+
+// Clear recent target directories (for user management)
+function clearRecentTargetDirs() {
+  try {
+    localStorage.removeItem("deadCodeAnalyzer.recentTargetDirs");
+    updateQuickTargetsDropdown();
+    showNotification("Recent target directories cleared", "success");
+  } catch (error) {
+    console.error("Error clearing recent target directories:", error);
+    showNotification("Error clearing recent directories", "error");
+  }
+}
+
+// Close the recent directories modal
+function closeRecentDirsModal() {
+  const modal = document.getElementById("recentDirsModal");
+  modal.style.display = "none";
+}
+
+// Use a recent directory (set it as current target)
+function useRecentDir(dirPath) {
+  document.getElementById("targetDir").value = dirPath;
+  closeRecentDirsModal();
+  showNotification(
+    `Set target directory to: ${getDisplayNameForPath(dirPath)}`,
+    "info",
+  );
+}
+
+// Remove a recent directory from the list
+function removeRecentDir(dirPath) {
+  if (
+    confirm(
+      `Remove "${getDisplayNameForPath(dirPath)}" from recent directories?`,
+    )
+  ) {
+    removeRecentTargetDir(dirPath);
+    showNotification(`Removed from recent directories`, "success");
+    // Refresh the modal content
+    showManageRecentDialog();
+  }
+}
+
+// Clear all recent directories
+function clearAllRecentDirs() {
+  if (
+    confirm("Are you sure you want to clear all recent target directories?")
+  ) {
+    clearRecentTargetDirs();
+    closeRecentDirsModal();
+  }
+}
+
+// Loading indicator functions
+function showLoading(show, message = "Loading...") {
+  const loadingIndicator = document.getElementById("loadingIndicator");
+  const loadingText = document.getElementById("loadingText");
+
+  if (show) {
+    if (loadingText) {
+      loadingText.textContent = message;
+    }
+    if (loadingIndicator) {
+      loadingIndicator.style.display = "flex";
+    }
+  } else {
+    if (loadingIndicator) {
+      loadingIndicator.style.display = "none";
+    }
+  }
+}
+
+// Notification functions
+function showNotification(message, type = "info") {
+  const notification = document.getElementById("notification");
+  if (!notification) return;
+
+  notification.textContent = message;
+  notification.className = `notification ${type}`;
+  notification.classList.add("show");
+
+  // Auto-hide after 3 seconds
+  setTimeout(() => {
+    notification.classList.remove("show");
+  }, 3000);
+}
+
+// Refresh analysis
+async function refreshAnalysis() {
+  await loadAnalysisData();
+}
+
+// File selection functions
+function selectAll() {
   document.querySelectorAll(".file-checkbox").forEach((checkbox) => {
-    checkbox.addEventListener("change", updateSelection);
+    if (!checkbox.disabled) {
+      checkbox.checked = true;
+      selectedFiles.add(checkbox.dataset.file);
+    }
   });
-
-  // Attach compact view specific event listeners
-  attachFileCheckboxListeners();
+  updateSelection();
+  updateSelectedCount();
+  updateDeleteButton();
 }
 
-// Update selection state
-function updateSelection() {
+function selectNone() {
+  document.querySelectorAll(".file-checkbox").forEach((checkbox) => {
+    checkbox.checked = false;
+  });
   selectedFiles.clear();
-  document.querySelectorAll(".file-checkbox:checked").forEach((checkbox) => {
-    selectedFiles.add(checkbox.dataset.file);
-  });
-
-  const count = selectedFiles.size;
-  document.getElementById("selectedCount").textContent = count;
-  document.getElementById("deleteSelectedBtn").disabled = count === 0;
-  document.getElementById("generateScriptBtn").disabled = count === 0;
+  updateSelection();
+  updateSelectedCount();
+  updateDeleteButton();
 }
 
-// Switch between detailed and compact views
+function selectOrphaned() {
+  selectNone();
+  document.querySelectorAll(".file-checkbox").forEach((checkbox) => {
+    const fileItem = checkbox.closest(
+      ".file-item, .file-tile, .compact-table-row",
+    );
+    if (fileItem && fileItem.classList.contains("orphaned")) {
+      checkbox.checked = true;
+      selectedFiles.add(checkbox.dataset.file);
+    }
+  });
+  updateSelection();
+  updateSelectedCount();
+  updateDeleteButton();
+}
+
+function selectTransitive() {
+  selectNone();
+  document.querySelectorAll(".file-checkbox").forEach((checkbox) => {
+    const fileItem = checkbox.closest(
+      ".file-item, .file-tile, .compact-table-row",
+    );
+    if (fileItem && fileItem.classList.contains("transitive")) {
+      checkbox.checked = true;
+      selectedFiles.add(checkbox.dataset.file);
+    }
+  });
+  updateSelection();
+  updateSelectedCount();
+  updateDeleteButton();
+}
+
+// Delete selected files
+async function deleteSelected() {
+  if (selectedFiles.size === 0) {
+    showNotification("No files selected for deletion", "warning");
+    return;
+  }
+
+  const fileList = Array.from(selectedFiles);
+  const confirmMessage = `Are you sure you want to delete ${
+    fileList.length
+  } file(s)?\n\n${fileList.slice(0, 5).join("\n")}${
+    fileList.length > 5 ? "\n... and " + (fileList.length - 5) + " more" : ""
+  }`;
+
+  if (!confirm(confirmMessage)) {
+    return;
+  }
+
+  showLoading(true, "Deleting selected files...");
+
+  try {
+    const response = await fetch("/api/delete-files", {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ filePaths: fileList }),
+    });
+
+    if (!response.ok) {
+      throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+    }
+
+    const result = await response.json();
+    const successfulDeletes = result.results.filter((r) => r.success).length;
+    const failedDeletes = result.results.filter((r) => !r.success);
+
+    if (successfulDeletes > 0) {
+      showNotification(
+        `Successfully deleted ${successfulDeletes} file(s)`,
+        "success",
+      );
+    }
+
+    if (failedDeletes.length > 0) {
+      console.warn("Some files failed to delete:", failedDeletes);
+
+      // Create a detailed error message
+      const errorDetails = failedDeletes
+        .map((f) => `• ${f.file}: ${f.error}`)
+        .join("\n");
+
+      showNotification(
+        `Warning: ${failedDeletes.length} file(s) could not be deleted. Check console for details.`,
+        "warning",
+      );
+
+      // Also log detailed information for debugging
+      console.group("Files that could not be deleted:");
+      failedDeletes.forEach((failure) => {
+        console.log(`File: ${failure.file}`);
+        console.log(`Error: ${failure.error}`);
+        console.log("---");
+      });
+      console.groupEnd();
+    }
+
+    // Clear selection and refresh analysis
+    selectedFiles.clear();
+    await loadAnalysisData();
+  } catch (error) {
+    console.error("Error deleting files:", error);
+    showNotification(`Failed to delete files: ${error.message}`, "error");
+  } finally {
+    showLoading(false);
+  }
+}
+
+// Generate deletion script
+function generateScript() {
+  if (selectedFiles.size === 0) {
+    showNotification("No files selected for script generation", "warning");
+    return;
+  }
+
+  const fileList = Array.from(selectedFiles);
+  const script = fileList.map((file) => `rm "${file}"`).join("\n");
+
+  // Create and download script file
+  const blob = new Blob([script], { type: "text/plain" });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement("a");
+  a.href = url;
+  a.download = "delete_dead_code.sh";
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  URL.revokeObjectURL(url);
+
+  showNotification(`Generated script for ${fileList.length} files`, "success");
+}
+
+// View switching
 function switchView(view) {
-  if (view === currentView) return;
+  if (!["detailed", "compact"].includes(view)) return;
 
   currentView = view;
   saveViewPreference();
@@ -1186,184 +1673,134 @@ function switchView(view) {
     }
   });
 
-  // Update view display
-  document
-    .querySelectorAll(".detailed-view, .compact-view")
-    .forEach((viewEl) => {
-      viewEl.classList.remove("active");
-    });
+  // Update content visibility
+  const detailedView = document.querySelector(".detailed-view");
+  const compactView = document.querySelector(".compact-view");
 
-  document.querySelector(`.${view}-view`).classList.add("active");
-}
-
-// Refresh analysis
-async function refreshAnalysis() {
-  showLoading(true, "Running analysis...");
-
-  try {
-    const response = await fetch("/api/analysis", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ targetDir: null }), // Use current directory
-    });
-
-    if (!response.ok) {
-      throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+  if (detailedView && compactView) {
+    if (view === "detailed") {
+      detailedView.classList.add("active");
+      compactView.classList.remove("active");
+    } else {
+      detailedView.classList.remove("active");
+      compactView.classList.add("active");
     }
-
-    await response.json();
-    showNotification("Analysis completed successfully!", "success");
-
-    // Reload the analysis data
-    await loadAnalysisData();
-  } catch (error) {
-    console.error("Error running analysis:", error);
-    showNotification("Error running analysis: " + error.message, "error");
-  } finally {
-    showLoading(false);
   }
 }
 
-// Selection functions
-function selectAll() {
+// Add event listeners to file elements
+function addFileEventListeners() {
+  attachFileCheckboxListeners();
+}
+
+// Update selection states
+function updateSelection() {
   document.querySelectorAll(".file-checkbox").forEach((checkbox) => {
-    checkbox.checked = true;
-  });
-  updateSelection();
-}
-
-function selectNone() {
-  document.querySelectorAll(".file-checkbox").forEach((checkbox) => {
-    checkbox.checked = false;
-  });
-  updateSelection();
-}
-
-function selectOrphaned() {
-  selectNone();
-  document.querySelectorAll(".orphaned .file-checkbox").forEach((checkbox) => {
-    checkbox.checked = true;
-  });
-  updateSelection();
-}
-
-function selectTransitive() {
-  selectNone();
-  document
-    .querySelectorAll(".transitive .file-checkbox")
-    .forEach((checkbox) => {
-      checkbox.checked = true;
-    });
-  updateSelection();
-}
-
-// Select all files in a specific category
-function selectAllInCategory(category) {
-  const categoryElement = document.querySelector(
-    `[data-category="${category}"]`,
-  );
-  if (!categoryElement) return;
-
-  const checkboxes = categoryElement.querySelectorAll(".file-checkbox");
-  checkboxes.forEach((checkbox) => {
-    if (!checkbox.checked) {
-      checkbox.checked = true;
-      const fileName = checkbox.dataset.file;
-      selectedFiles.add(fileName);
-
-      // Update visual state
-      const fileItem = checkbox.closest(
-        ".file-tile, .compact-table-row, .file-item",
-      );
-      if (fileItem) {
-        fileItem.classList.add("selected");
-      }
-    }
-  });
-
-  updateSelectedCount();
-  updateDeleteButton();
-  showNotification(`Selected all ${category} files`, "success");
-}
-
-// Select all files in a specific path/directory
-function selectAllInPath(path) {
-  const pathElement = document.querySelector(`[data-path="${path}"]`);
-  if (!pathElement) return;
-
-  const checkboxes = pathElement.querySelectorAll(".file-checkbox");
-  let selectedCount = 0;
-
-  checkboxes.forEach((checkbox) => {
-    if (!checkbox.checked) {
-      checkbox.checked = true;
-      const fileName = checkbox.dataset.file;
-      selectedFiles.add(fileName);
-      selectedCount++;
-
-      // Update visual state
-      const fileItem = checkbox.closest(
-        ".file-tile, .compact-table-row, .file-item",
-      );
-      if (fileItem) {
-        fileItem.classList.add("selected");
-      }
-    }
-  });
-
-  updateSelectedCount();
-  updateDeleteButton();
-
-  if (selectedCount > 0) {
-    showNotification(
-      `Selected ${selectedCount} files from ${getPathDisplayName(path)}`,
-      "success",
+    const fileName = checkbox.dataset.file;
+    const fileItem = checkbox.closest(
+      ".file-item, .file-tile, .compact-table-row",
     );
+
+    if (selectedFiles.has(fileName)) {
+      checkbox.checked = true;
+      if (fileItem) {
+        fileItem.classList.add("selected");
+      }
+    } else {
+      checkbox.checked = false;
+      if (fileItem) {
+        fileItem.classList.remove("selected");
+      }
+    }
+  });
+}
+
+// Update selected count display
+function updateSelectedCount() {
+  const selectedCountElement = document.getElementById("selectedCount");
+  if (selectedCountElement) {
+    selectedCountElement.textContent = selectedFiles.size;
   }
 }
 
-// Copy file path to clipboard
-function copyToClipboard(filePath) {
-  if (navigator.clipboard && navigator.clipboard.writeText) {
-    navigator.clipboard
-      .writeText(filePath)
-      .then(() => {
-        showNotification(`Copied to clipboard: ${filePath}`, "success");
-      })
-      .catch((err) => {
-        console.error("Failed to copy to clipboard:", err);
-        fallbackCopyToClipboard(filePath);
-      });
+// Update delete button state
+function updateDeleteButton() {
+  const deleteBtn = document.getElementById("deleteSelectedBtn");
+  const generateBtn = document.getElementById("generateScriptBtn");
+
+  if (deleteBtn) {
+    deleteBtn.disabled = selectedFiles.size === 0;
+  }
+  if (generateBtn) {
+    generateBtn.disabled = selectedFiles.size === 0;
+  }
+}
+
+// Setup compact view event handlers
+function setupCompactViewEventHandlers() {
+  // Compact view toggle buttons
+  document.addEventListener("click", function (e) {
+    if (e.target.classList.contains("compact-toggle-btn")) {
+      const view = e.target.dataset.compactView;
+      switchCompactView(view);
+    }
+  });
+
+  // Search functionality
+  const searchInput = document.getElementById("compactSearch");
+  if (searchInput) {
+    searchInput.addEventListener("input", function () {
+      filterFiles(this.value);
+    });
+  }
+}
+
+// Switch compact view layout
+function switchCompactView(view) {
+  const listView = document.querySelector(".compact-tiles-container");
+  const tableView = document.querySelector(".compact-table-container");
+
+  document.querySelectorAll(".compact-toggle-btn").forEach((btn) => {
+    btn.classList.remove("active");
+    if (btn.dataset.compactView === view) {
+      btn.classList.add("active");
+    }
+  });
+
+  if (view === "table") {
+    if (listView) listView.style.display = "none";
+    if (tableView) tableView.style.display = "block";
   } else {
-    fallbackCopyToClipboard(filePath);
+    if (listView) listView.style.display = "block";
+    if (tableView) tableView.style.display = "none";
   }
 }
 
-// Fallback copy method for older browsers
-function fallbackCopyToClipboard(text) {
-  const textArea = document.createElement("textarea");
-  textArea.value = text;
-  textArea.style.position = "fixed";
-  textArea.style.left = "-999999px";
-  textArea.style.top = "-999999px";
-  document.body.appendChild(textArea);
-  textArea.focus();
-  textArea.select();
-
-  try {
-    document.execCommand("copy");
-    showNotification(`Copied to clipboard: ${text}`, "success");
-  } catch (err) {
-    console.error("Fallback copy failed:", err);
-    showNotification("Failed to copy to clipboard", "error");
-  }
-
-  document.body.removeChild(textArea);
+// Filter files based on search
+function filterFiles(searchTerm) {
+  const term = searchTerm.toLowerCase();
+  document
+    .querySelectorAll(".file-tile, .compact-table-row")
+    .forEach((element) => {
+      const fileName = element.dataset.filename || element.dataset.file || "";
+      const visible = fileName.toLowerCase().includes(term);
+      element.style.display = visible ? "" : "none";
+    });
 }
 
-// Show file details modal
+// Utility functions for file operations
+function copyToClipboard(text) {
+  navigator.clipboard
+    .writeText(text)
+    .then(() => {
+      showNotification("Copied to clipboard", "success");
+    })
+    .catch((err) => {
+      console.error("Failed to copy:", err);
+      showNotification("Failed to copy to clipboard", "error");
+    });
+}
+
 function showFileDetailsModal(filePath) {
   if (!currentAnalysisData || !currentAnalysisData.chainAnalysis) {
     showNotification("No analysis data available", "warning");
@@ -1372,553 +1809,137 @@ function showFileDetailsModal(filePath) {
 
   const analysis = currentAnalysisData.chainAnalysis[filePath];
   if (!analysis) {
-    showNotification("No analysis found for this file", "warning");
+    showNotification("No analysis data for this file", "warning");
     return;
   }
 
-  // Create modal HTML
-  const modalHtml = `
-    <div class="file-details-modal" id="fileDetailsModal">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h3>📄 File Analysis Details</h3>
-          <button class="modal-close" onclick="closeFileDetailsModal()">&times;</button>
-        </div>
-        <div class="modal-body">
-          <div class="file-path">
-            <strong>File:</strong> <code>${filePath}</code>
-          </div>
-          <div class="file-summary">
-            <strong>Summary:</strong> ${analysis.summary || "No summary available"}
-          </div>
-          ${
-            analysis.chains && analysis.chains.length > 0
-              ? `
-            <div class="dependency-chains">
-              <strong>Dependency Chains:</strong>
-              ${analysis.chains
-                .map(
-                  (chain, index) => `
-                <div class="chain-item">
-                  <div class="chain-header">Chain ${index + 1}:</div>
-                  <div class="chain-path">${chain.path.join(" ← ")}</div>
-                  <div class="chain-info">
-                    Root: <code>${chain.rootFile}</code> 
-                    (${chain.isRootReachable ? "reachable" : "unreachable"})
-                  </div>
-                </div>
-              `,
-                )
-                .join("")}
-            </div>
-          `
-              : ""
-          }
-          ${
-            analysis.isOrphaned
-              ? `
-            <div class="orphaned-info">
-              <strong>⚠️ Orphaned File:</strong> This file is not imported by any other file.
-            </div>
-          `
-              : ""
-          }
-        </div>
-        <div class="modal-footer">
-          <button class="btn btn-secondary" onclick="copyToClipboard('${filePath.replace(/'/g, "\\'")}')">
-            📋 Copy Path
-          </button>
-          <button class="btn btn-primary" onclick="closeFileDetailsModal()">Close</button>
-        </div>
-      </div>
+  const modalContent = `
+    <div style="background: white; padding: 20px; border-radius: 8px; max-width: 600px; max-height: 80vh; overflow: auto;">
+      <h3>File Details: ${filePath}</h3>
+      <p><strong>Summary:</strong> ${
+        analysis.summary || "No summary available"
+      }</p>
+      <p><strong>Is Orphaned:</strong> ${analysis.isOrphaned ? "Yes" : "No"}</p>
+      ${
+        analysis.chains && analysis.chains.length > 0
+          ? `
+        <h4>Dependency Chains:</h4>
+        <ul>
+          ${analysis.chains
+            .map(
+              (chain) => `
+            <li>
+              <strong>Path:</strong> ${chain.path.join(" ← ")}<br>
+              <strong>Root:</strong> ${chain.rootFile} (${
+                chain.isRootReachable ? "reachable" : "unreachable"
+              })
+            </li>
+          `,
+            )
+            .join("")}
+        </ul>
+      `
+          : "<p>No dependency chains found.</p>"
+      }
+      <button onclick="this.parentElement.parentElement.remove()" style="margin-top: 10px; padding: 5px 10px;">Close</button>
     </div>
   `;
 
-  // Remove existing modal if any
-  const existingModal = document.getElementById("fileDetailsModal");
-  if (existingModal) {
-    existingModal.remove();
-  }
-
-  // Add modal to body
-  document.body.insertAdjacentHTML("beforeend", modalHtml);
-
-  // Show modal with animation
-  const modal = document.getElementById("fileDetailsModal");
-  modal.style.display = "flex";
-  setTimeout(() => modal.classList.add("show"), 10);
-}
-
-// Close file details modal
-function closeFileDetailsModal() {
-  const modal = document.getElementById("fileDetailsModal");
-  if (modal) {
-    modal.classList.remove("show");
-    setTimeout(() => modal.remove(), 300);
-  }
-}
-
-// Select high priority (safe to delete) files automatically
-function selectHighPriorityFiles() {
-  selectNone(); // Clear current selection
-
-  // Select all orphaned files (highest priority)
-  document.querySelectorAll(".orphaned .file-checkbox").forEach((checkbox) => {
-    checkbox.checked = true;
-    selectedFiles.add(checkbox.dataset.file);
+  const overlay = document.createElement("div");
+  overlay.style.cssText =
+    "position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); display: flex; align-items: center; justify-content: center; z-index: 1000;";
+  overlay.innerHTML = modalContent;
+  overlay.addEventListener("click", function (e) {
+    if (e.target === overlay) {
+      overlay.remove();
+    }
   });
 
-  // Select all transitive dead code files (medium priority)
-  document
-    .querySelectorAll(".transitive .file-checkbox")
-    .forEach((checkbox) => {
-      checkbox.checked = true;
-      selectedFiles.add(checkbox.dataset.file);
-    });
+  document.body.appendChild(overlay);
+}
 
+// Category selection functions
+function selectAllInCategory(categoryClass) {
+  document
+    .querySelectorAll(`.${categoryClass} .file-checkbox`)
+    .forEach((checkbox) => {
+      if (!checkbox.disabled) {
+        checkbox.checked = true;
+        selectedFiles.add(checkbox.dataset.file);
+      }
+    });
+  updateSelection();
   updateSelectedCount();
   updateDeleteButton();
-
-  const totalSelected = selectedFiles.size;
-  showNotification(`Selected ${totalSelected} safe-to-delete files`, "success");
 }
 
-// Delete selected files
-async function deleteSelected() {
-  if (selectedFiles.size === 0) return;
-
-  const fileList = Array.from(selectedFiles);
-  const confirmMessage = `Are you sure you want to delete ${fileList.length} files?\n\n${fileList.join("\n")}`;
-
-  if (!confirm(confirmMessage)) return;
-
-  showLoading(true, "Deleting files...");
-
-  try {
-    const response = await fetch("/api/delete-files", {
-      method: "DELETE",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ filePaths: fileList }),
-    });
-
-    const result = await response.json();
-
-    if (response.ok) {
-      const successful = result.results.filter((r) => r.success).length;
-      const failed = result.results.filter((r) => !r.success).length;
-
-      let message = `Successfully deleted ${successful} files`;
-      if (failed > 0) {
-        message += `, ${failed} files failed to delete`;
+function selectAllInPath(path) {
+  document
+    .querySelectorAll(`[data-path="${path}"] .file-checkbox`)
+    .forEach((checkbox) => {
+      if (!checkbox.disabled) {
+        checkbox.checked = true;
+        selectedFiles.add(checkbox.dataset.file);
       }
-
-      showNotification(message, successful > 0 ? "success" : "error");
-
-      // Auto-refresh analysis after deletion
-      setTimeout(() => {
-        refreshAnalysis();
-      }, 1000);
-    } else {
-      throw new Error(result.error || "Failed to delete files");
-    }
-  } catch (error) {
-    console.error("Error deleting files:", error);
-    showNotification("Error deleting files: " + error.message, "error");
-  } finally {
-    showLoading(false);
-  }
-}
-
-// Generate deletion script
-async function generateScript() {
-  if (selectedFiles.size === 0) {
-    showNotification("Please select files first", "warning");
-    return;
-  }
-
-  try {
-    const response = await fetch("/api/generate-script", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ filePaths: Array.from(selectedFiles) }),
     });
-
-    if (response.ok) {
-      const script = await response.text();
-      downloadFile("delete-dead-code.sh", script);
-      showNotification("Deletion script generated and downloaded", "success");
-    } else {
-      throw new Error("Failed to generate script");
-    }
-  } catch (error) {
-    console.error("Error generating script:", error);
-    showNotification("Error generating script: " + error.message, "error");
-  }
+  updateSelection();
+  updateSelectedCount();
+  updateDeleteButton();
 }
 
-// Show file details in compact view
-function showFileDetails(fileName) {
-  if (!currentAnalysisData) return;
-
-  // Find the file in the analysis data
-  let fileData = null;
-  const categories = ["orphaned", "transitive-dead-code", "false-positive"];
-
-  for (const category of categories) {
-    const found = currentAnalysisData.unreachableFiles?.find(
-      (item) => item.file === fileName || item === fileName,
-    );
-    if (found) {
-      fileData = found;
-      break;
-    }
-  }
-
-  if (!fileData) {
-    showNotification(`File details not found for: ${fileName}`, "warning");
-    return;
-  }
-
-  // Create a simple modal or alert with file details
-  const details =
-    typeof fileData === "object" && fileData.analysis
-      ? `File: ${fileName}\nCategory: ${fileData.analysis.category || "Unknown"}\nChains: ${fileData.analysis.chains?.length || 0}`
-      : `File: ${fileName}\nBasic dead code file`;
-
-  alert(details); // Simple implementation - could be enhanced with a proper modal
-}
-
-// Utility Functions
-
-// Update selected file count display
-function updateSelectedCount() {
-  const count = selectedFiles.size;
-  const countElement = document.getElementById("selectedCount");
-  if (countElement) {
-    countElement.textContent = count;
-  }
-}
-
-// Update delete button state
-function updateDeleteButton() {
-  const deleteBtn = document.getElementById("deleteSelectedBtn");
-  const generateBtn = document.getElementById("generateScriptBtn");
-  const count = selectedFiles.size;
-
-  if (deleteBtn) {
-    deleteBtn.disabled = count === 0;
-  }
-  if (generateBtn) {
-    generateBtn.disabled = count === 0;
-  }
-}
-
-// Show notification to user
-function showNotification(message, type = "info") {
-  // Create notification element
-  const notification = document.createElement("div");
-  notification.className = `notification notification-${type}`;
-  notification.textContent = message;
-
-  // Style the notification
-  notification.style.cssText = `
-    position: fixed;
-    top: 20px;
-    right: 20px;
-    background: ${type === "success" ? "#4caf50" : type === "error" ? "#f44336" : type === "warning" ? "#ff9800" : "#2196f3"};
-    color: white;
-    padding: 12px 24px;
-    border-radius: 8px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-    z-index: 10000;
-    max-width: 400px;
-    font-size: 14px;
-    font-weight: 500;
-    opacity: 0;
-    transform: translateX(100%);
-    transition: all 0.3s ease;
-  `;
-
-  document.body.appendChild(notification);
-
-  // Animate in
-  setTimeout(() => {
-    notification.style.opacity = "1";
-    notification.style.transform = "translateX(0)";
-  }, 100);
-
-  // Auto remove after 3 seconds
-  setTimeout(() => {
-    notification.style.opacity = "0";
-    notification.style.transform = "translateX(100%)";
-    setTimeout(() => {
-      if (notification.parentNode) {
-        notification.parentNode.removeChild(notification);
-      }
-    }, 300);
-  }, 3000);
-}
-
-// Show loading state
-function showLoading(show = true, message = "Loading...") {
-  let loader = document.getElementById("global-loader");
-
-  if (show) {
-    if (!loader) {
-      loader = document.createElement("div");
-      loader.id = "global-loader";
-      loader.innerHTML = `
-        <div class="loader-backdrop">
-          <div class="loader-content">
-            <div class="spinner"></div>
-            <div class="loader-message">${message}</div>
-          </div>
-        </div>
-      `;
-
-      loader.style.cssText = `
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        z-index: 10001;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-      `;
-
-      // Add CSS for spinner
-      const style = document.createElement("style");
-      style.textContent = `
-        .loader-backdrop {
-          background: rgba(0, 0, 0, 0.7);
-          border-radius: 12px;
-          padding: 24px;
-          text-align: center;
-          color: white;
-        }
-        
-        .spinner {
-          width: 40px;
-          height: 40px;
-          border: 4px solid rgba(255, 255, 255, 0.2);
-          border-left: 4px solid white;
-          border-radius: 50%;
-          animation: spin 1s linear infinite;
-          margin: 0 auto 16px;
-        }
-        
-        .loader-message {
-          font-size: 16px;
-          font-weight: 500;
-        }
-        
-        @keyframes spin {
-          0% { transform: rotate(0deg); }
-          100% { transform: rotate(360deg); }
-        }
-      `;
-      document.head.appendChild(style);
-
-      document.body.appendChild(loader);
-    } else {
-      loader.querySelector(".loader-message").textContent = message;
-      loader.style.display = "flex";
-    }
-  } else {
-    if (loader) {
-      loader.style.display = "none";
-    }
-  }
-}
-
-// Get display name for a file path
-function getPathDisplayName(path) {
-  if (!path) return "";
-
-  // Remove leading slash if present
-  const cleanPath = path.startsWith("/") ? path.substring(1) : path;
-
-  // Split path and take last few segments
-  const parts = cleanPath.split("/");
-  if (parts.length <= 3) {
-    return cleanPath;
-  }
-
-  // Show first and last 2 segments with ellipsis
-  return `${parts[0]}/.../${parts.slice(-2).join("/")}`;
-}
-
-// Group files by their directory path
+// File grouping utilities
 function groupFilesByPath(files) {
   const grouped = {};
-
   files.forEach(({ file }) => {
-    const lastSlashIndex = file.lastIndexOf("/");
-    const dirPath = lastSlashIndex > 0 ? file.substring(0, lastSlashIndex) : "";
-
-    if (!grouped[dirPath]) {
-      grouped[dirPath] = [];
+    const path = file.substring(0, file.lastIndexOf("/")) || ".";
+    if (!grouped[path]) {
+      grouped[path] = [];
     }
-    grouped[dirPath].push({ file });
+    grouped[path].push({ file });
   });
-
   return grouped;
 }
 
-// Download a file with given name and content
-function downloadFile(filename, content) {
-  const blob = new Blob([content], { type: "text/plain" });
-  const url = window.URL.createObjectURL(blob);
-  const a = document.createElement("a");
-  a.href = url;
-  a.download = filename;
-  document.body.appendChild(a);
-  a.click();
-  document.body.removeChild(a);
-  window.URL.revokeObjectURL(url);
+function getPathDisplayName(path) {
+  if (path === ".") return "Root";
+  const parts = path.split("/");
+  return parts.length > 2 ? `.../${parts.slice(-2).join("/")}` : path;
 }
 
-// Select files by category type
-function selectFilesByCategory(category) {
-  selectNone();
-  document
-    .querySelectorAll(`.${category} .file-checkbox`)
-    .forEach((checkbox) => {
-      checkbox.checked = true;
-      selectedFiles.add(checkbox.dataset.file);
+function getFileIcon(ext, filePath) {
+  const extension = ext.toLowerCase();
+  const fileName = filePath.toLowerCase();
 
-      // Update visual state
-      const fileItem = checkbox.closest(
-        ".file-tile, .compact-table-row, .file-item",
-      );
-      if (fileItem) {
-        fileItem.classList.add("selected");
-      }
-    });
+  // Common file type icons
+  if (["js", "jsx"].includes(extension)) return "📄";
+  if (["ts", "tsx"].includes(extension)) return "📘";
+  if (["css", "scss", "sass"].includes(extension)) return "🎨";
+  if (["html", "htm"].includes(extension)) return "🌐";
+  if (["json"].includes(extension)) return "📋";
+  if (["md", "markdown"].includes(extension)) return "📝";
+  if (["png", "jpg", "jpeg", "gif", "svg"].includes(extension)) return "🖼️";
+  if (["test", "spec"].some((t) => fileName.includes(t))) return "🧪";
+  if (fileName.includes("hook")) return "🪝";
+  if (fileName.includes("component")) return "🧩";
+  if (fileName.includes("util")) return "🔧";
 
-  updateSelectedCount();
-  updateDeleteButton();
+  return "📄"; // Default icon
 }
 
-// Enhanced compact view event handlers
-function setupCompactViewEventHandlers() {
-  // Add event listeners for view toggle buttons
-  document.addEventListener("click", function (e) {
-    if (e.target.classList.contains("compact-toggle-btn")) {
-      document
-        .querySelectorAll(".compact-toggle-btn")
-        .forEach((b) => b.classList.remove("active"));
-      e.target.classList.add("active");
-
-      const viewMode =
-        e.target.dataset.compactView ||
-        e.target.textContent.toLowerCase().includes("table")
-          ? "table"
-          : "list";
-      toggleCompactView(viewMode);
-    }
-  });
-
-  // Add search functionality
-  document.addEventListener("input", function (e) {
-    if (e.target.id === "compactSearch") {
-      filterCompactFiles(e.target.value);
-    }
-  });
-
-  // Restore view preference
-  const viewMode = localStorage.getItem("compactViewMode") || "list";
-  setTimeout(() => {
-    const viewButton = document.querySelector(
-      `.compact-toggle-btn[data-compact-view="${viewMode}"]`,
-    );
-    if (viewButton) {
-      viewButton.click();
-    }
-  }, 100);
-}
-
-// Toggle between list and table view in compact mode
-function toggleCompactView(viewMode) {
-  const compactContent = document.getElementById("compact-content");
-  if (!compactContent) return;
-
-  const data = processAnalysisData(currentAnalysisData);
-
-  if (viewMode === "table") {
-    // Check if we have a large number of files that need optimization
-    const totalFiles =
-      (data.categories.orphaned?.length || 0) +
-      (data.categories["transitive-dead-code"]?.length || 0) +
-      (data.categories["false-positive"]?.length || 0);
-
-    if (totalFiles > 40) {
-      // Use optimized version for large file lists
-      compactContent.innerHTML = generateCompactTableViewOptimized(data);
-    } else {
-      // Use original version for smaller lists
-      compactContent.innerHTML = generateCompactTableView(data);
-      // Reattach event listeners immediately for non-optimized version
-      attachFileCheckboxListeners();
-    }
-  } else {
-    // Generate and show list view
-    compactContent.innerHTML = generateCompactListView(data);
-    // Reattach event listeners immediately for list view
-    attachFileCheckboxListeners();
+// Close modal when clicking outside of it
+window.addEventListener("click", function (event) {
+  const modal = document.getElementById("recentDirsModal");
+  if (event.target === modal) {
+    closeRecentDirsModal();
   }
+});
 
-  // Store preference
-  localStorage.setItem("compactViewMode", viewMode);
-}
-
-// Filter files in compact view based on search term
-function filterCompactFiles(searchTerm) {
-  const term = searchTerm.toLowerCase().trim();
-
-  // Filter file tiles
-  document.querySelectorAll(".file-tile").forEach((tile) => {
-    const fileName = tile.dataset.filename || "";
-    const filePath = tile.dataset.file || "";
-    const isVisible =
-      fileName.includes(term) || filePath.toLowerCase().includes(term);
-
-    tile.style.display = isVisible ? "block" : "none";
-  });
-
-  // Filter table rows
-  document.querySelectorAll(".compact-table-row").forEach((row) => {
-    const fileName = row.dataset.filename || "";
-    const filePath = row.dataset.file || "";
-    const isVisible =
-      fileName.includes(term) || filePath.toLowerCase().includes(term);
-
-    row.style.display = isVisible ? "table-row" : "none";
-  });
-
-  // Hide/show path sections if all files are hidden
-  document.querySelectorAll(".path-tile").forEach((pathTile) => {
-    const visibleFiles = pathTile.querySelectorAll(
-      '.file-tile[style*="block"], .file-tile:not([style*="none"])',
-    );
-    pathTile.style.display = visibleFiles.length > 0 ? "block" : "none";
-  });
-
-  // Hide/show category sections if all paths are hidden
-  document.querySelectorAll(".category-section").forEach((categorySection) => {
-    const visiblePaths = categorySection.querySelectorAll(
-      '.path-tile[style*="block"], .path-tile:not([style*="none"])',
-    );
-    const visibleTableRows = categorySection.querySelectorAll(
-      '.compact-table-row[style*="table-row"], .compact-table-row:not([style*="none"])',
-    );
-    categorySection.style.display =
-      visiblePaths.length > 0 || visibleTableRows.length > 0 ? "block" : "none";
-  });
-}
+// Close modal with Escape key
+window.addEventListener("keydown", function (event) {
+  if (event.key === "Escape") {
+    const modal = document.getElementById("recentDirsModal");
+    if (modal.style.display === "flex") {
+      closeRecentDirsModal();
+    }
+  }
+});
