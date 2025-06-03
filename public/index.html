@@ -1,0 +1,120 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Auto-Refreshing Dead Code Analysis</title>
+    <link rel="stylesheet" href="styles.css" />
+    <link rel="stylesheet" href="extension-styles.css" />
+    <link rel="stylesheet" href="modern-compact-view.css" />
+    <link rel="stylesheet" href="compact-table.css" />
+  </head>
+  <body>
+    <div class="container">
+      <div class="header">
+        <h1>🔗 Dead Code Analysis Dashboard</h1>
+        <p>
+          Hierarchical dependency chain visualization with real-time updates
+        </p>
+
+        <!-- New target directory selector -->
+        <div class="target-selector">
+          <div class="target-input-group">
+            <label for="targetDir">Target Directory:</label>
+            <input
+              type="text"
+              id="targetDir"
+              placeholder="Enter project path"
+            />
+            <select id="quickTargets">
+              <option value="">-- Quick Select --</option>
+              <option
+                value="/Users/barryvelasquez/projects/mighty45-web/apps/coach-console"
+              >
+                coach-console
+              </option>
+              <option
+                value="/Users/barryvelasquez/projects/mighty45-web/apps/m45-admin"
+              >
+                m45-admin
+              </option>
+              <option value="/Users/barryvelasquez/projects/mighty45-web">
+                entire project
+              </option>
+            </select>
+            <button class="btn btn-success" id="setTargetBtn">
+              Set Target & Analyze
+            </button>
+          </div>
+          <div class="current-target" id="currentTarget">
+            Current target: Loading...
+          </div>
+        </div>
+      </div>
+
+      <div class="stats-grid" id="statsGrid">
+        <!-- Stats will be populated by JavaScript -->
+      </div>
+
+      <div class="entry-points-section" id="entryPointsSection">
+        <!-- Entry points will be populated by JavaScript -->
+      </div>
+
+      <div class="main-content">
+        <div class="refresh-info">
+          <h4>🔄 Auto-Refresh Features</h4>
+          <p>
+            <strong>✨ New!</strong> Analysis automatically updates after each
+            file deletion to show real-time impact on dependency chains. Use the
+            manual refresh button to update at any time.
+          </p>
+        </div>
+
+        <div class="action-buttons">
+          <button class="btn btn-info" id="refreshBtn">
+            🔄 Refresh Analysis
+          </button>
+          <button class="btn btn-primary" id="selectAllBtn">Select All</button>
+          <button class="btn btn-primary" id="selectNoneBtn">
+            Select None
+          </button>
+          <button class="btn btn-warning" id="selectOrphanedBtn">
+            Select Orphaned
+          </button>
+          <button class="btn btn-warning" id="selectTransitiveBtn">
+            Select Transitive
+          </button>
+          <button class="btn btn-danger" id="deleteSelectedBtn" disabled>
+            Delete Selected (<span id="selectedCount">0</span>)
+          </button>
+          <button class="btn btn-secondary" id="generateScriptBtn" disabled>
+            Generate Script
+          </button>
+        </div>
+
+        <div class="toggle-view">
+          <button class="toggle-btn active" data-view="detailed">
+            Detailed View
+          </button>
+          <button class="toggle-btn" data-view="compact">Compact View</button>
+        </div>
+
+        <div id="content-container">
+          <!-- File content will be populated by JavaScript -->
+        </div>
+      </div>
+    </div>
+
+    <div id="notification" class="notification"></div>
+
+    <!-- Loading indicator -->
+    <div id="loadingIndicator" class="loading-overlay" style="display: none">
+      <div class="loading-content">
+        <div class="spinner"></div>
+        <p id="loadingText">Loading...</p>
+      </div>
+    </div>
+
+    <script src="app.js"></script>
+  </body>
+</html>

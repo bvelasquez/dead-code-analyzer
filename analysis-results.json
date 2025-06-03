@@ -1,0 +1,1341 @@
+{
+  "totalFiles": 371,
+  "reachableFiles": [
+    "App",
+    "hooks/useWindowSize",
+    "pages/home/subscribe/SubscribePage",
+    "themes/Colors",
+    "hooks/useOrganizationSubscription",
+    "components/organisms/PricingPage",
+    "components/organisms/StripeForm",
+    "hooks/useEvents",
+    "atoms/organizationIdSelector",
+    "atoms/organizationIdAtom",
+    "data/StripeData",
+    "data/UserData",
+    "atoms/usersAtom",
+    "data/Types",
+    "atoms/trialDaysSelector",
+    "data/TrialDays",
+    "atoms/organizationDataAtom",
+    "pages/home/plan/PrintableTrainingPlan",
+    "hooks/useOrganizationData",
+    "data/OrganizationData",
+    "hooks/useGlobalExercises",
+    "pages/home/plan/TrainingPlanV2",
+    "pages/home/plan/PrintViewButton",
+    "pages/home/plan/TrainingPlan",
+    "atoms/exerciseDBAtom",
+    "pages/home/plan/SplitExerciseTablePrintable",
+    "hooks/useSplitExercises",
+    "data/ProtocolData",
+    "atoms/userDataAtom",
+    "components/molecules/ExerciseNameTableCellPrintable",
+    "components/molecules/SuperSetExerciseRowPrintable",
+    "components/molecules/PrintableFieldValue",
+    "atoms/exerciseDBkeysSelector",
+    "hooks/useLabels",
+    "hooks/useSplits",
+    "data/GlobalData",
+    "components/molecules/LabelChips",
+    "pages/onboarding/ConnectCodePage",
+    "pages/onboarding/OnboardingPage",
+    "pages/home/HomePage",
+    "pages/home/Footer",
+    "hooks/useProtocolsSubscription",
+    "hooks/useClientsLastSeen",
+    "hooks/useRecipes",
+    "data/RecipeData",
+    "data/Units",
+    "hooks/useReportHistory",
+    "hooks/useClientsAggregate",
+    "hooks/useRenderCount",
+    "atoms/difficultyKeysAtom",
+    "components/organisms/StillTherePage",
+    "hooks/useIdle",
+    "data/FirebaseApp",
+    "data/firebaseConfig.prod",
+    "data/firebaseConfig.sit",
+    "Emitter",
+    "hooks/useUsers",
+    "data/MessageData",
+    "components/organisms/SubscribeNowDialog",
+    "pages/home/children/ProtocolsPage",
+    "pages/home/children/protocols/ProtocolDetail",
+    "pages/home/children/protocols/ProtocolDetails",
+    "atoms/EditButton",
+    "hooks/useAllWorkouts",
+    "pages/home/children/protocols/ChooseExistingWorkoutDialog",
+    "components/molecules/LabelSelect",
+    "components/organisms/WorkoutSelectionList",
+    "components/organisms/WorkoutSelectionExercises",
+    "components/molecules/ExerciseNameTableCell",
+    "components/molecules/SuperSetExerciseRow",
+    "components/molecules/FieldValue",
+    "components/BlueButton",
+    "pages/home/children/protocols/ProtocolDialog",
+    "data/ClientData",
+    "components/LibraryFunctions",
+    "pages/home/children/protocols/SplitReorderDialog",
+    "pages/home/children/protocols/SplitList",
+    "pages/home/children/protocols/EmptySplits",
+    "components/atoms/SplitButton",
+    "pages/home/children/protocols/SplitExerciseList",
+    "pages/home/children/protocols/SplitExerciseTable",
+    "pages/home/children/protocols/SplitExerciseDialog",
+    "pages/home/children/protocols/SplitExerciseRow",
+    "pages/home/children/protocols/SuperSetExerciseTile",
+    "components/organisms/ExercisesList",
+    "components/CircleText",
+    "pages/home/children/protocols/SingleExerciseTile",
+    "pages/home/children/protocols/ExerciseReorderDialog",
+    "pages/home/children/protocols/SplitDialog",
+    "components/atoms/NumberField",
+    "components/atoms/SplitDialogTitle",
+    "pages/home/children/protocols/ProtocolsList",
+    "pages/home/children/protocols/ProtocolTable",
+    "hooks/useDataGridActions",
+    "components/organisms/DataGridActions",
+    "hooks/useClients",
+    "pages/home/children/protocols/EmptyProtocols",
+    "components/organisms/ProtocolFilters",
+    "pages/home/MainTitle",
+    "pages/home/children/AdminPage",
+    "pages/home/children/admin/EditSupplements",
+    "hooks/useSupplements",
+    "pages/home/children/admin/SupplementEditDialog",
+    "pages/home/children/admin/EditProgressPhotos",
+    "pages/home/children/admin/ReorderDialog",
+    "pages/home/children/admin/QuestionEditDialog",
+    "hooks/useProgressPhotos",
+    "components/organisms/IntegrationPage",
+    "components/organisms/APIKeyList",
+    "hooks/useAPIKeys",
+    "pages/home/children/admin/EditLabels",
+    "pages/home/children/admin/LabelEditDialog",
+    "pages/home/children/admin/EditQuestions",
+    "hooks/useQuestions",
+    "pages/home/children/admin/EditOrganization",
+    "pages/home/children/admin/AdvancedBrandingEditorDialog",
+    "pages/home/children/admin/ColorPickerDialog",
+    "pages/home/children/admin/BrandingPreview",
+    "pages/home/children/LibraryPage",
+    "pages/home/children/library/EditFiles",
+    "pages/home/children/library/FileEditDialog",
+    "hooks/useSharedFiles",
+    "data/Library",
+    "pages/home/children/MealPlanDetailPage",
+    "pages/home/children/recipes/MealPlanDetails",
+    "pages/home/children/recipes/components/mealplan/StyledComponents",
+    "pages/home/children/recipes/components/mealplan/MealPlanFloatingActions",
+    "pages/home/children/recipes/components/mealplan/MealPlanDetailsContent",
+    "pages/home/children/recipes/components/mealplan/MealPlanShoppingList",
+    "pages/home/children/recipes/components/mealplan/MealPlanRecipes",
+    "pages/home/children/recipes/components/mealplan/MealPlanDescription",
+    "pages/home/children/recipes/components/mealplan/MealPlanHeader",
+    "pages/home/children/recipes/components/mealplan/index",
+    "pages/home/children/recipes/MealPlanDialog",
+    "pages/home/children/recipes/hooks/useMealPlanDetails",
+    "pages/home/children/RecipeDetailPage",
+    "pages/home/children/recipes/RecipeDetails",
+    "pages/home/children/recipes/components/StyledComponents",
+    "pages/home/children/recipes/components/RecipeDetailsContent",
+    "pages/home/children/recipes/components/RecipeFloatingActions",
+    "pages/home/children/recipes/components/RecipeImage",
+    "pages/home/children/recipes/components/RecipeInstructions",
+    "pages/home/children/recipes/components/RecipeIngredients",
+    "pages/home/children/recipes/components/RecipeDescription",
+    "pages/home/children/recipes/components/RecipeHeader",
+    "pages/home/children/recipes/components/index",
+    "pages/home/children/recipes/hooks/useRecipeDetails",
+    "pages/home/children/recipes/RecipeDialog",
+    "atoms/fileUploadLimitSelector",
+    "pages/home/children/RecipePage",
+    "pages/home/children/recipes/EditRecipes",
+    "pages/home/children/clients/RecipeGeneratorDialog",
+    "data/ChatGPTMessages",
+    "pages/home/children/recipes/RecipesDataGrid",
+    "pages/home/children/recipes/EditMealPlans",
+    "pages/home/children/recipes/MealPlanDataGrid",
+    "pages/home/children/admin/EditIngredients",
+    "hooks/useIngredients",
+    "pages/home/children/admin/IngredientEditDialog",
+    "pages/home/children/ExercisesPage",
+    "pages/home/children/exercises/ExerciseDialog",
+    "pages/home/children/exercises/ExerciseDataGrid",
+    "pages/home/children/exercises/ExerciseDetails",
+    "atoms/NewLineTypography",
+    "pages/home/children/exercises/AddVideoDialog",
+    "pages/home/children/exercises/MuscleGroupButtonGroup",
+    "components/MuscleGroupButton",
+    "components/ExerciseGroupImage",
+    "components/RedButton",
+    "pages/home/children/SharedVideoPage",
+    "pages/home/children/shared-videos/components/VideoUtils",
+    "pages/home/children/shared-videos/components/ThumbnailGenerator",
+    "hooks/useVideoThumbnails",
+    "components/organisms/SendMessageDialog",
+    "hooks/useClientMessageGroupId",
+    "components/organisms/ChatComponent",
+    "hooks/useMessagesByGroup",
+    "components/SendMessage",
+    "components/AudioCaptureModal",
+    "pages/home/children/shared-videos/components/VideoViewerDialog",
+    "pages/home/children/shared-videos/components/VideoGallery",
+    "pages/home/children/shared-videos/components/SharedVideo",
+    "pages/home/children/shared-videos/components/StyledComponents",
+    "pages/home/children/shared-videos/components/VideoStatisticsCard",
+    "pages/home/children/shared-videos/components/LoadingState",
+    "hooks/useOrganizationUsers",
+    "hooks/useSharedVideos",
+    "pages/home/children/MessagesPage",
+    "components/molecules/TabPanel",
+    "hooks/useMessageGroupData",
+    "pages/home/children/messages/AddGroupDialog",
+    "hooks/useCoaches",
+    "pages/home/children/messages/GroupTable",
+    "components/molecules/AvatarList",
+    "components/atoms/CircleImage",
+    "pages/home/children/CoachesPage",
+    "pages/home/children/coaches/AddCoachDialog",
+    "pages/home/children/coaches/CoachSummary",
+    "pages/home/children/coaches/components/CoachConnectCodeCard",
+    "data/CoachData",
+    "pages/home/children/coaches/components/CoachHeader",
+    "pages/home/children/clients/ClientSummary",
+    "pages/home/children/clients/components/ClientDialogs",
+    "pages/home/children/clients/components/ProtocolHistoryDialog",
+    "hooks/useProtocolHistory",
+    "pages/home/children/clients/ProtocolHistory",
+    "pages/home/children/clients/CardioSelectDialog",
+    "pages/home/children/clients/CardioGoals",
+    "components/molecules/RecentHistory",
+    "hooks/useHistory",
+    "pages/home/children/clients/NutritionGoals",
+    "pages/home/children/clients/NutritionTitleRow",
+    "pages/home/children/clients/NutritionGoalRow",
+    "pages/home/children/clients/MacroSelectSimpleDialog",
+    "hooks/useHealthReport",
+    "components/BlueBorderButton",
+    "pages/home/children/clients/BodyMeasurementsEditDialog",
+    "pages/home/children/clients/CoachSelectDialog",
+    "pages/home/children/clients/ClientProtocolDialog",
+    "pages/home/children/clients/ProtocolSelectDialog",
+    "pages/home/children/clients/MealPlanSelectDialog",
+    "pages/home/children/clients/ClientEditDialog",
+    "pages/home/children/clients/components/ClientFloatingActions",
+    "components/organisms/SharedFiles",
+    "pages/home/children/clients/ClientSummaryComponentModules",
+    "pages/home/children/clients/PhotoSummary",
+    "components/organisms/PhotoGroup",
+    "pages/home/children/clients/ExerciseCharts",
+    "pages/home/children/clients/SharedVideos",
+    "hooks/useSharedVideosByClient",
+    "pages/home/children/clients/TrainingData",
+    "pages/home/children/clients/TrainingData/TrainingDataNormalSet",
+    "pages/home/children/clients/TrainingData/TrainingDataSuperSet",
+    "pages/home/children/clients/OptionalData",
+    "components/organisms/OptionalText",
+    "components/organisms/NutritionValue",
+    "components/organisms/NutritionProgress",
+    "components/organisms/ClientLog",
+    "components/organisms/ClientLogList",
+    "hooks/useClientLogData",
+    "pages/home/children/clients/NutritionData",
+    "pages/home/children/clients/NutritionCharts",
+    "hooks/useClientNutritionChartData",
+    "pages/home/children/clients/BoxStyles",
+    "pages/home/children/clients/components/ClientTabs",
+    "pages/home/children/clients/components/EnhancedVideosTab",
+    "pages/home/children/clients/components/EnhancedNotesTab",
+    "pages/home/children/clients/components/EnhancedPhotosTab",
+    "hooks/useClientPhotos",
+    "pages/home/children/clients/components/EnhancedDailyReportsTab",
+    "components/NutritionDetails",
+    "components/ExerciseDetails",
+    "components/PhotoThumbnails",
+    "hooks/useDailyReports",
+    "pages/home/children/clients/components/EnhancedNutritionTab",
+    "hooks/useSupplementHistory",
+    "components/organisms/SupplementPrescriptionDialog",
+    "pages/home/children/clients/components/EnhancedTrainingTab",
+    "pages/home/children/clients/components/training/RecentWorkouts",
+    "pages/home/children/clients/components/training/WorkoutChart",
+    "pages/home/children/clients/components/training/ExerciseDetail",
+    "pages/home/children/clients/components/training/SetDisplay",
+    "pages/home/children/clients/components/training/StyledComponents",
+    "pages/home/children/clients/components/training/AnalyticsQuickCards",
+    "pages/home/children/clients/components/training/TodaysTrainingCard",
+    "pages/home/children/clients/components/training/TrainingStatisticsCard",
+    "pages/home/children/clients/components/EnhancedProgressTab",
+    "pages/home/children/clients/components/ClientInfoCards",
+    "pages/home/children/clients/components/ClientHeader",
+    "hooks/useEmail",
+    "locales/emails/onboarding-client",
+    "pages/home/children/clients/hooks/useClientEffects",
+    "hooks/useClientSubscription",
+    "pages/home/children/clients/hooks/useClientData",
+    "hooks/useClientExerciseReports",
+    "atoms/clientExerciseReportsAtom",
+    "pages/home/children/coaches/CoachTable",
+    "components/molecules/AvatarName",
+    "pages/home/children/ClientsPage",
+    "pages/home/children/clients/ClientTable",
+    "pages/home/children/clients/ClientDataGrid",
+    "pages/home/children/ReportPage",
+    "components/organisms/ReportTableContainer",
+    "components/molecules/NoReportsView",
+    "components/atoms/ReportTableContainerTitle",
+    "pages/home/children/reports/ReportSummaryDrawer",
+    "pages/home/children/reports/components/ExtraDataQuestionsCard",
+    "pages/home/children/reports/components/ReportsFloatingActions",
+    "pages/home/children/reports/components/ProgressPhotosCard",
+    "pages/home/children/reports/components/WeeklyQuestionsCard",
+    "pages/home/children/reports/components/SupplementsCard",
+    "pages/home/children/reports/components/CardioGoalsCard",
+    "pages/home/children/reports/components/ExerciseCard",
+    "components/ComparisonDisplay",
+    "utils/comparisonUtils",
+    "contexts/ReportComparisonContext",
+    "pages/home/children/reports/components/NutritionCard",
+    "pages/home/children/reports/components/ComplianceCard",
+    "components/ComplianceTrendIndicator",
+    "hooks/useReportComplianceTrend",
+    "pages/home/children/reports/components/AIInsightsCard",
+    "pages/home/children/reports/components/ReportHeader",
+    "components/PreviousReportSelector",
+    "components/ComparisonToggle",
+    "pages/home/children/reports/components/ReportNavigation",
+    "hooks/useReportCompliance",
+    "hooks/useReportSummary",
+    "data/ReportData",
+    "components/molecules/DateRangePicker",
+    "components/MainHeader",
+    "components/MenuItem",
+    "components/MenuButtonDeselected",
+    "components/MenuButton",
+    "pages/signin/SignInPage",
+    "pages/landing/LandingPage",
+    "components/organisms/SafetyWrappers/index",
+    "components/organisms/SafetyWrappers/StrictModeHandler",
+    "components/organisms/SafetyWrappers/ErrorBoundary",
+    "components/organisms/SafetyWrappers/ClientSideOnly",
+    "themes/MainTheme",
+    "App.css",
+    "index.css",
+    "index",
+    "serviceWorker"
+  ],
+  "unreachableFiles": [
+    "atoms/MessageActivity",
+    "atoms/Message",
+    "atoms/MessageLoading",
+    "styles/FontStyles",
+    "components/RedBorderButton",
+    "components/ErrorBoundary",
+    "components/organisms/CardioGoalRow",
+    "components/organisms/CardioGoalDialog",
+    "components/organisms/CardioGoals",
+    "hooks/useOrganizationBranding",
+    "react-app-env.d",
+    "pages/home/children/clients/CardioTitleRow",
+    "pages/home/children/clients/ClientDescription",
+    "pages/home/children/clients/ConnectCode",
+    "pages/home/children/clients/ChartLegend",
+    "pages/home/children/clients/ClientMessages",
+    "pages/home/children/clients/hooks/useDailyReports",
+    "pages/home/children/clients/SupplementPrescriptions",
+    "pages/home/children/clients/SupplementTitleRow",
+    "pages/home/children/clients/DailyProgressReports",
+    "pages/home/children/clients/SupplementPrescriptionRow",
+    "pages/home/children/clients/ClientEmptyComponent",
+    "pages/home/children/messages/GroupTableRow",
+    "pages/home/children/coaches/CoachConnectCode",
+    "pages/home/children/coaches/CoachTableRow",
+    "pages/home/children/coaches/CoachDescription",
+    "pages/home/children/recipes/components/RecipePrintableView",
+    "pages/home/children/reports/QuickReply",
+    "pages/home/children/reports/ReportNoteDialog",
+    "pages/home/children/reports/CaloriesIntake",
+    "pages/home/children/reports/WeeklyNote",
+    "pages/home/children/reports/MacroSummary",
+    "pages/home/children/reports/WeeklyData",
+    "pages/home/children/reports/ClientReportSummary",
+    "pages/home/children/reports/ExerciseData",
+    "pages/home/children/reports/ReportDescription",
+    "pages/home/children/reports/OptionalDataSummary",
+    "pages/home/children/reports/WeeklyOptional",
+    "pages/home/children/reports/CardioGoals",
+    "pages/home/children/reports/SupplementHistory",
+    "pages/home/children/reports/components/MessagesCard",
+    "pages/home/children/reports/ProgressPhotos",
+    "pages/home/children/reports/ActiveSupplements",
+    "pages/home/children/reports/ProtocolSummary",
+    "pages/home/children/reports/NutritionSummary",
+    "pages/home/children/reports/AdditionalData",
+    "pages/home/children/reports/Macros",
+    "themes/SignInTheme",
+    "i18n"
+  ],
+  "entryPoints": [
+    "index",
+    "index.css",
+    "components/organisms/SafetyWrappers/index",
+    "pages/home/children/recipes/components/index",
+    "pages/home/children/recipes/components/mealplan/index",
+    "App.css",
+    "App"
+  ],
+  "chainAnalysis": {
+    "atoms/MessageActivity": {
+      "file": "atoms/MessageActivity",
+      "isOrphaned": false,
+      "chains": [
+        {
+          "path": [
+            "atoms/MessageActivity",
+            "atoms/MessageLoading",
+            "pages/home/children/clients/ClientMessages",
+            "pages/home/children/reports/QuickReply"
+          ],
+          "rootFile": "pages/home/children/reports/QuickReply",
+          "isRootReachable": false,
+          "chainLength": 4,
+          "reason": "Entire chain unreachable"
+        }
+      ],
+      "importedBy": [
+        "atoms/MessageLoading"
+      ],
+      "summary": "Transitive dead code - 1 chain(s), max depth 4"
+    },
+    "atoms/Message": {
+      "file": "atoms/Message",
+      "isOrphaned": false,
+      "chains": [
+        {
+          "path": [
+            "atoms/Message",
+            "pages/home/children/clients/ClientMessages",
+            "pages/home/children/reports/QuickReply"
+          ],
+          "rootFile": "pages/home/children/reports/QuickReply",
+          "isRootReachable": false,
+          "chainLength": 3,
+          "reason": "Entire chain unreachable"
+        }
+      ],
+      "importedBy": [
+        "pages/home/children/clients/ClientMessages"
+      ],
+      "summary": "Transitive dead code - 1 chain(s), max depth 3"
+    },
+    "atoms/MessageLoading": {
+      "file": "atoms/MessageLoading",
+      "isOrphaned": false,
+      "chains": [
+        {
+          "path": [
+            "atoms/MessageLoading",
+            "pages/home/children/clients/ClientMessages",
+            "pages/home/children/reports/QuickReply"
+          ],
+          "rootFile": "pages/home/children/reports/QuickReply",
+          "isRootReachable": false,
+          "chainLength": 3,
+          "reason": "Entire chain unreachable"
+        }
+      ],
+      "importedBy": [
+        "pages/home/children/clients/ClientMessages"
+      ],
+      "summary": "Transitive dead code - 1 chain(s), max depth 3"
+    },
+    "styles/FontStyles": {
+      "file": "styles/FontStyles",
+      "isOrphaned": true,
+      "chains": [
+        {
+          "path": [
+            "styles/FontStyles"
+          ],
+          "rootFile": "styles/FontStyles",
+          "isRootReachable": false,
+          "chainLength": 1,
+          "reason": "Orphaned file"
+        }
+      ],
+      "importedBy": [],
+      "summary": "Orphaned - not imported by any file"
+    },
+    "components/RedBorderButton": {
+      "file": "components/RedBorderButton",
+      "isOrphaned": false,
+      "chains": [
+        {
+          "path": [
+            "components/RedBorderButton",
+            "pages/home/children/clients/ClientDescription"
+          ],
+          "rootFile": "pages/home/children/clients/ClientDescription",
+          "isRootReachable": false,
+          "chainLength": 2,
+          "reason": "Entire chain unreachable"
+        },
+        {
+          "path": [
+            "components/RedBorderButton",
+            "pages/home/children/clients/ConnectCode",
+            "pages/home/children/clients/ClientDescription"
+          ],
+          "rootFile": "pages/home/children/clients/ClientDescription",
+          "isRootReachable": false,
+          "chainLength": 3,
+          "reason": "Entire chain unreachable"
+        },
+        {
+          "path": [
+            "components/RedBorderButton",
+            "pages/home/children/coaches/CoachConnectCode"
+          ],
+          "rootFile": "pages/home/children/coaches/CoachConnectCode",
+          "isRootReachable": false,
+          "chainLength": 2,
+          "reason": "Entire chain unreachable"
+        },
+        {
+          "path": [
+            "components/RedBorderButton",
+            "pages/home/children/coaches/CoachDescription"
+          ],
+          "rootFile": "pages/home/children/coaches/CoachDescription",
+          "isRootReachable": false,
+          "chainLength": 2,
+          "reason": "Entire chain unreachable"
+        },
+        {
+          "path": [
+            "components/RedBorderButton",
+            "pages/home/children/reports/ReportDescription"
+          ],
+          "rootFile": "pages/home/children/reports/ReportDescription",
+          "isRootReachable": false,
+          "chainLength": 2,
+          "reason": "Entire chain unreachable"
+        }
+      ],
+      "importedBy": [
+        "pages/home/children/clients/ClientDescription",
+        "pages/home/children/clients/ConnectCode",
+        "pages/home/children/coaches/CoachConnectCode",
+        "pages/home/children/coaches/CoachDescription",
+        "pages/home/children/reports/ReportDescription"
+      ],
+      "summary": "Transitive dead code - 5 chain(s), max depth 3"
+    },
+    "components/ErrorBoundary": {
+      "file": "components/ErrorBoundary",
+      "isOrphaned": true,
+      "chains": [
+        {
+          "path": [
+            "components/ErrorBoundary"
+          ],
+          "rootFile": "components/ErrorBoundary",
+          "isRootReachable": false,
+          "chainLength": 1,
+          "reason": "Orphaned file"
+        }
+      ],
+      "importedBy": [],
+      "summary": "Orphaned - not imported by any file"
+    },
+    "components/organisms/CardioGoalRow": {
+      "file": "components/organisms/CardioGoalRow",
+      "isOrphaned": false,
+      "chains": [
+        {
+          "path": [
+            "components/organisms/CardioGoalRow",
+            "components/organisms/CardioGoals"
+          ],
+          "rootFile": "components/organisms/CardioGoals",
+          "isRootReachable": false,
+          "chainLength": 2,
+          "reason": "Entire chain unreachable"
+        }
+      ],
+      "importedBy": [
+        "components/organisms/CardioGoals"
+      ],
+      "summary": "Transitive dead code - 1 chain(s), max depth 2"
+    },
+    "components/organisms/CardioGoalDialog": {
+      "file": "components/organisms/CardioGoalDialog",
+      "isOrphaned": false,
+      "chains": [
+        {
+          "path": [
+            "components/organisms/CardioGoalDialog",
+            "components/organisms/CardioGoals"
+          ],
+          "rootFile": "components/organisms/CardioGoals",
+          "isRootReachable": false,
+          "chainLength": 2,
+          "reason": "Entire chain unreachable"
+        }
+      ],
+      "importedBy": [
+        "components/organisms/CardioGoals"
+      ],
+      "summary": "Transitive dead code - 1 chain(s), max depth 2"
+    },
+    "components/organisms/CardioGoals": {
+      "file": "components/organisms/CardioGoals",
+      "isOrphaned": true,
+      "chains": [
+        {
+          "path": [
+            "components/organisms/CardioGoals"
+          ],
+          "rootFile": "components/organisms/CardioGoals",
+          "isRootReachable": false,
+          "chainLength": 1,
+          "reason": "Orphaned file"
+        }
+      ],
+      "importedBy": [],
+      "summary": "Orphaned - not imported by any file"
+    },
+    "hooks/useOrganizationBranding": {
+      "file": "hooks/useOrganizationBranding",
+      "isOrphaned": false,
+      "chains": [
+        {
+          "path": [
+            "hooks/useOrganizationBranding",
+            "pages/home/children/reports/CardioGoals"
+          ],
+          "rootFile": "pages/home/children/reports/CardioGoals",
+          "isRootReachable": false,
+          "chainLength": 2,
+          "reason": "Entire chain unreachable"
+        }
+      ],
+      "importedBy": [
+        "pages/home/children/reports/CardioGoals"
+      ],
+      "summary": "Transitive dead code - 1 chain(s), max depth 2"
+    },
+    "react-app-env.d": {
+      "file": "react-app-env.d",
+      "isOrphaned": true,
+      "chains": [
+        {
+          "path": [
+            "react-app-env.d"
+          ],
+          "rootFile": "react-app-env.d",
+          "isRootReachable": false,
+          "chainLength": 1,
+          "reason": "Orphaned file"
+        }
+      ],
+      "importedBy": [],
+      "summary": "Orphaned - not imported by any file"
+    },
+    "pages/home/children/clients/CardioTitleRow": {
+      "file": "pages/home/children/clients/CardioTitleRow",
+      "isOrphaned": false,
+      "chains": [
+        {
+          "path": [
+            "pages/home/children/clients/CardioTitleRow",
+            "components/organisms/CardioGoals"
+          ],
+          "rootFile": "components/organisms/CardioGoals",
+          "isRootReachable": false,
+          "chainLength": 2,
+          "reason": "Entire chain unreachable"
+        }
+      ],
+      "importedBy": [
+        "components/organisms/CardioGoals"
+      ],
+      "summary": "Transitive dead code - 1 chain(s), max depth 2"
+    },
+    "pages/home/children/clients/ClientDescription": {
+      "file": "pages/home/children/clients/ClientDescription",
+      "isOrphaned": true,
+      "chains": [
+        {
+          "path": [
+            "pages/home/children/clients/ClientDescription"
+          ],
+          "rootFile": "pages/home/children/clients/ClientDescription",
+          "isRootReachable": false,
+          "chainLength": 1,
+          "reason": "Orphaned file"
+        }
+      ],
+      "importedBy": [],
+      "summary": "Orphaned - not imported by any file"
+    },
+    "pages/home/children/clients/ConnectCode": {
+      "file": "pages/home/children/clients/ConnectCode",
+      "isOrphaned": false,
+      "chains": [
+        {
+          "path": [
+            "pages/home/children/clients/ConnectCode",
+            "pages/home/children/clients/ClientDescription"
+          ],
+          "rootFile": "pages/home/children/clients/ClientDescription",
+          "isRootReachable": false,
+          "chainLength": 2,
+          "reason": "Entire chain unreachable"
+        }
+      ],
+      "importedBy": [
+        "pages/home/children/clients/ClientDescription"
+      ],
+      "summary": "Transitive dead code - 1 chain(s), max depth 2"
+    },
+    "pages/home/children/clients/ChartLegend": {
+      "file": "pages/home/children/clients/ChartLegend",
+      "isOrphaned": false,
+      "chains": [
+        {
+          "path": [
+            "pages/home/children/clients/ChartLegend",
+            "pages/home/children/clients/DailyProgressReports"
+          ],
+          "rootFile": "pages/home/children/clients/DailyProgressReports",
+          "isRootReachable": false,
+          "chainLength": 2,
+          "reason": "Entire chain unreachable"
+        }
+      ],
+      "importedBy": [
+        "pages/home/children/clients/DailyProgressReports"
+      ],
+      "summary": "Transitive dead code - 1 chain(s), max depth 2"
+    },
+    "pages/home/children/clients/ClientMessages": {
+      "file": "pages/home/children/clients/ClientMessages",
+      "isOrphaned": false,
+      "chains": [
+        {
+          "path": [
+            "pages/home/children/clients/ClientMessages",
+            "pages/home/children/reports/QuickReply"
+          ],
+          "rootFile": "pages/home/children/reports/QuickReply",
+          "isRootReachable": false,
+          "chainLength": 2,
+          "reason": "Entire chain unreachable"
+        }
+      ],
+      "importedBy": [
+        "pages/home/children/reports/QuickReply"
+      ],
+      "summary": "Transitive dead code - 1 chain(s), max depth 2"
+    },
+    "pages/home/children/clients/hooks/useDailyReports": {
+      "file": "pages/home/children/clients/hooks/useDailyReports",
+      "isOrphaned": true,
+      "chains": [
+        {
+          "path": [
+            "pages/home/children/clients/hooks/useDailyReports"
+          ],
+          "rootFile": "pages/home/children/clients/hooks/useDailyReports",
+          "isRootReachable": false,
+          "chainLength": 1,
+          "reason": "Orphaned file"
+        }
+      ],
+      "importedBy": [],
+      "summary": "Orphaned - not imported by any file"
+    },
+    "pages/home/children/clients/SupplementPrescriptions": {
+      "file": "pages/home/children/clients/SupplementPrescriptions",
+      "isOrphaned": true,
+      "chains": [
+        {
+          "path": [
+            "pages/home/children/clients/SupplementPrescriptions"
+          ],
+          "rootFile": "pages/home/children/clients/SupplementPrescriptions",
+          "isRootReachable": false,
+          "chainLength": 1,
+          "reason": "Orphaned file"
+        }
+      ],
+      "importedBy": [],
+      "summary": "Orphaned - not imported by any file"
+    },
+    "pages/home/children/clients/SupplementTitleRow": {
+      "file": "pages/home/children/clients/SupplementTitleRow",
+      "isOrphaned": false,
+      "chains": [
+        {
+          "path": [
+            "pages/home/children/clients/SupplementTitleRow",
+            "pages/home/children/clients/SupplementPrescriptions"
+          ],
+          "rootFile": "pages/home/children/clients/SupplementPrescriptions",
+          "isRootReachable": false,
+          "chainLength": 2,
+          "reason": "Entire chain unreachable"
+        }
+      ],
+      "importedBy": [
+        "pages/home/children/clients/SupplementPrescriptions"
+      ],
+      "summary": "Transitive dead code - 1 chain(s), max depth 2"
+    },
+    "pages/home/children/clients/DailyProgressReports": {
+      "file": "pages/home/children/clients/DailyProgressReports",
+      "isOrphaned": true,
+      "chains": [
+        {
+          "path": [
+            "pages/home/children/clients/DailyProgressReports"
+          ],
+          "rootFile": "pages/home/children/clients/DailyProgressReports",
+          "isRootReachable": false,
+          "chainLength": 1,
+          "reason": "Orphaned file"
+        }
+      ],
+      "importedBy": [],
+      "summary": "Orphaned - not imported by any file"
+    },
+    "pages/home/children/clients/SupplementPrescriptionRow": {
+      "file": "pages/home/children/clients/SupplementPrescriptionRow",
+      "isOrphaned": false,
+      "chains": [
+        {
+          "path": [
+            "pages/home/children/clients/SupplementPrescriptionRow",
+            "pages/home/children/clients/SupplementPrescriptions"
+          ],
+          "rootFile": "pages/home/children/clients/SupplementPrescriptions",
+          "isRootReachable": false,
+          "chainLength": 2,
+          "reason": "Entire chain unreachable"
+        }
+      ],
+      "importedBy": [
+        "pages/home/children/clients/SupplementPrescriptions"
+      ],
+      "summary": "Transitive dead code - 1 chain(s), max depth 2"
+    },
+    "pages/home/children/clients/ClientEmptyComponent": {
+      "file": "pages/home/children/clients/ClientEmptyComponent",
+      "isOrphaned": true,
+      "chains": [
+        {
+          "path": [
+            "pages/home/children/clients/ClientEmptyComponent"
+          ],
+          "rootFile": "pages/home/children/clients/ClientEmptyComponent",
+          "isRootReachable": false,
+          "chainLength": 1,
+          "reason": "Orphaned file"
+        }
+      ],
+      "importedBy": [],
+      "summary": "Orphaned - not imported by any file"
+    },
+    "pages/home/children/messages/GroupTableRow": {
+      "file": "pages/home/children/messages/GroupTableRow",
+      "isOrphaned": true,
+      "chains": [
+        {
+          "path": [
+            "pages/home/children/messages/GroupTableRow"
+          ],
+          "rootFile": "pages/home/children/messages/GroupTableRow",
+          "isRootReachable": false,
+          "chainLength": 1,
+          "reason": "Orphaned file"
+        }
+      ],
+      "importedBy": [],
+      "summary": "Orphaned - not imported by any file"
+    },
+    "pages/home/children/coaches/CoachConnectCode": {
+      "file": "pages/home/children/coaches/CoachConnectCode",
+      "isOrphaned": true,
+      "chains": [
+        {
+          "path": [
+            "pages/home/children/coaches/CoachConnectCode"
+          ],
+          "rootFile": "pages/home/children/coaches/CoachConnectCode",
+          "isRootReachable": false,
+          "chainLength": 1,
+          "reason": "Orphaned file"
+        }
+      ],
+      "importedBy": [],
+      "summary": "Orphaned - not imported by any file"
+    },
+    "pages/home/children/coaches/CoachTableRow": {
+      "file": "pages/home/children/coaches/CoachTableRow",
+      "isOrphaned": true,
+      "chains": [
+        {
+          "path": [
+            "pages/home/children/coaches/CoachTableRow"
+          ],
+          "rootFile": "pages/home/children/coaches/CoachTableRow",
+          "isRootReachable": false,
+          "chainLength": 1,
+          "reason": "Orphaned file"
+        }
+      ],
+      "importedBy": [],
+      "summary": "Orphaned - not imported by any file"
+    },
+    "pages/home/children/coaches/CoachDescription": {
+      "file": "pages/home/children/coaches/CoachDescription",
+      "isOrphaned": true,
+      "chains": [
+        {
+          "path": [
+            "pages/home/children/coaches/CoachDescription"
+          ],
+          "rootFile": "pages/home/children/coaches/CoachDescription",
+          "isRootReachable": false,
+          "chainLength": 1,
+          "reason": "Orphaned file"
+        }
+      ],
+      "importedBy": [],
+      "summary": "Orphaned - not imported by any file"
+    },
+    "pages/home/children/recipes/components/RecipePrintableView": {
+      "file": "pages/home/children/recipes/components/RecipePrintableView",
+      "isOrphaned": true,
+      "chains": [
+        {
+          "path": [
+            "pages/home/children/recipes/components/RecipePrintableView"
+          ],
+          "rootFile": "pages/home/children/recipes/components/RecipePrintableView",
+          "isRootReachable": false,
+          "chainLength": 1,
+          "reason": "Orphaned file"
+        }
+      ],
+      "importedBy": [],
+      "summary": "Orphaned - not imported by any file"
+    },
+    "pages/home/children/reports/QuickReply": {
+      "file": "pages/home/children/reports/QuickReply",
+      "isOrphaned": true,
+      "chains": [
+        {
+          "path": [
+            "pages/home/children/reports/QuickReply"
+          ],
+          "rootFile": "pages/home/children/reports/QuickReply",
+          "isRootReachable": false,
+          "chainLength": 1,
+          "reason": "Orphaned file"
+        }
+      ],
+      "importedBy": [],
+      "summary": "Orphaned - not imported by any file"
+    },
+    "pages/home/children/reports/ReportNoteDialog": {
+      "file": "pages/home/children/reports/ReportNoteDialog",
+      "isOrphaned": false,
+      "chains": [
+        {
+          "path": [
+            "pages/home/children/reports/ReportNoteDialog",
+            "pages/home/children/reports/MacroSummary",
+            "pages/home/children/reports/Macros"
+          ],
+          "rootFile": "pages/home/children/reports/Macros",
+          "isRootReachable": false,
+          "chainLength": 3,
+          "reason": "Entire chain unreachable"
+        }
+      ],
+      "importedBy": [
+        "pages/home/children/reports/MacroSummary"
+      ],
+      "summary": "Transitive dead code - 1 chain(s), max depth 3"
+    },
+    "pages/home/children/reports/CaloriesIntake": {
+      "file": "pages/home/children/reports/CaloriesIntake",
+      "isOrphaned": true,
+      "chains": [
+        {
+          "path": [
+            "pages/home/children/reports/CaloriesIntake"
+          ],
+          "rootFile": "pages/home/children/reports/CaloriesIntake",
+          "isRootReachable": false,
+          "chainLength": 1,
+          "reason": "Orphaned file"
+        }
+      ],
+      "importedBy": [],
+      "summary": "Orphaned - not imported by any file"
+    },
+    "pages/home/children/reports/WeeklyNote": {
+      "file": "pages/home/children/reports/WeeklyNote",
+      "isOrphaned": false,
+      "chains": [
+        {
+          "path": [
+            "pages/home/children/reports/WeeklyNote",
+            "pages/home/children/reports/WeeklyData"
+          ],
+          "rootFile": "pages/home/children/reports/WeeklyData",
+          "isRootReachable": false,
+          "chainLength": 2,
+          "reason": "Entire chain unreachable"
+        }
+      ],
+      "importedBy": [
+        "pages/home/children/reports/WeeklyData"
+      ],
+      "summary": "Transitive dead code - 1 chain(s), max depth 2"
+    },
+    "pages/home/children/reports/MacroSummary": {
+      "file": "pages/home/children/reports/MacroSummary",
+      "isOrphaned": false,
+      "chains": [
+        {
+          "path": [
+            "pages/home/children/reports/MacroSummary",
+            "pages/home/children/reports/Macros"
+          ],
+          "rootFile": "pages/home/children/reports/Macros",
+          "isRootReachable": false,
+          "chainLength": 2,
+          "reason": "Entire chain unreachable"
+        }
+      ],
+      "importedBy": [
+        "pages/home/children/reports/Macros"
+      ],
+      "summary": "Transitive dead code - 1 chain(s), max depth 2"
+    },
+    "pages/home/children/reports/WeeklyData": {
+      "file": "pages/home/children/reports/WeeklyData",
+      "isOrphaned": true,
+      "chains": [
+        {
+          "path": [
+            "pages/home/children/reports/WeeklyData"
+          ],
+          "rootFile": "pages/home/children/reports/WeeklyData",
+          "isRootReachable": false,
+          "chainLength": 1,
+          "reason": "Orphaned file"
+        }
+      ],
+      "importedBy": [],
+      "summary": "Orphaned - not imported by any file"
+    },
+    "pages/home/children/reports/ClientReportSummary": {
+      "file": "pages/home/children/reports/ClientReportSummary",
+      "isOrphaned": false,
+      "chains": [
+        {
+          "path": [
+            "pages/home/children/reports/ClientReportSummary",
+            "pages/home/children/reports/ReportDescription"
+          ],
+          "rootFile": "pages/home/children/reports/ReportDescription",
+          "isRootReachable": false,
+          "chainLength": 2,
+          "reason": "Entire chain unreachable"
+        }
+      ],
+      "importedBy": [
+        "pages/home/children/reports/ReportDescription"
+      ],
+      "summary": "Transitive dead code - 1 chain(s), max depth 2"
+    },
+    "pages/home/children/reports/ExerciseData": {
+      "file": "pages/home/children/reports/ExerciseData",
+      "isOrphaned": true,
+      "chains": [
+        {
+          "path": [
+            "pages/home/children/reports/ExerciseData"
+          ],
+          "rootFile": "pages/home/children/reports/ExerciseData",
+          "isRootReachable": false,
+          "chainLength": 1,
+          "reason": "Orphaned file"
+        }
+      ],
+      "importedBy": [],
+      "summary": "Orphaned - not imported by any file"
+    },
+    "pages/home/children/reports/ReportDescription": {
+      "file": "pages/home/children/reports/ReportDescription",
+      "isOrphaned": true,
+      "chains": [
+        {
+          "path": [
+            "pages/home/children/reports/ReportDescription"
+          ],
+          "rootFile": "pages/home/children/reports/ReportDescription",
+          "isRootReachable": false,
+          "chainLength": 1,
+          "reason": "Orphaned file"
+        }
+      ],
+      "importedBy": [],
+      "summary": "Orphaned - not imported by any file"
+    },
+    "pages/home/children/reports/OptionalDataSummary": {
+      "file": "pages/home/children/reports/OptionalDataSummary",
+      "isOrphaned": false,
+      "chains": [
+        {
+          "path": [
+            "pages/home/children/reports/OptionalDataSummary",
+            "pages/home/children/reports/AdditionalData"
+          ],
+          "rootFile": "pages/home/children/reports/AdditionalData",
+          "isRootReachable": false,
+          "chainLength": 2,
+          "reason": "Entire chain unreachable"
+        }
+      ],
+      "importedBy": [
+        "pages/home/children/reports/AdditionalData"
+      ],
+      "summary": "Transitive dead code - 1 chain(s), max depth 2"
+    },
+    "pages/home/children/reports/WeeklyOptional": {
+      "file": "pages/home/children/reports/WeeklyOptional",
+      "isOrphaned": false,
+      "chains": [
+        {
+          "path": [
+            "pages/home/children/reports/WeeklyOptional",
+            "pages/home/children/reports/WeeklyData"
+          ],
+          "rootFile": "pages/home/children/reports/WeeklyData",
+          "isRootReachable": false,
+          "chainLength": 2,
+          "reason": "Entire chain unreachable"
+        }
+      ],
+      "importedBy": [
+        "pages/home/children/reports/WeeklyData"
+      ],
+      "summary": "Transitive dead code - 1 chain(s), max depth 2"
+    },
+    "pages/home/children/reports/CardioGoals": {
+      "file": "pages/home/children/reports/CardioGoals",
+      "isOrphaned": true,
+      "chains": [
+        {
+          "path": [
+            "pages/home/children/reports/CardioGoals"
+          ],
+          "rootFile": "pages/home/children/reports/CardioGoals",
+          "isRootReachable": false,
+          "chainLength": 1,
+          "reason": "Orphaned file"
+        }
+      ],
+      "importedBy": [],
+      "summary": "Orphaned - not imported by any file"
+    },
+    "pages/home/children/reports/SupplementHistory": {
+      "file": "pages/home/children/reports/SupplementHistory",
+      "isOrphaned": true,
+      "chains": [
+        {
+          "path": [
+            "pages/home/children/reports/SupplementHistory"
+          ],
+          "rootFile": "pages/home/children/reports/SupplementHistory",
+          "isRootReachable": false,
+          "chainLength": 1,
+          "reason": "Orphaned file"
+        }
+      ],
+      "importedBy": [],
+      "summary": "Orphaned - not imported by any file"
+    },
+    "pages/home/children/reports/components/MessagesCard": {
+      "file": "pages/home/children/reports/components/MessagesCard",
+      "isOrphaned": true,
+      "chains": [
+        {
+          "path": [
+            "pages/home/children/reports/components/MessagesCard"
+          ],
+          "rootFile": "pages/home/children/reports/components/MessagesCard",
+          "isRootReachable": false,
+          "chainLength": 1,
+          "reason": "Orphaned file"
+        }
+      ],
+      "importedBy": [],
+      "summary": "Orphaned - not imported by any file"
+    },
+    "pages/home/children/reports/ProgressPhotos": {
+      "file": "pages/home/children/reports/ProgressPhotos",
+      "isOrphaned": true,
+      "chains": [
+        {
+          "path": [
+            "pages/home/children/reports/ProgressPhotos"
+          ],
+          "rootFile": "pages/home/children/reports/ProgressPhotos",
+          "isRootReachable": false,
+          "chainLength": 1,
+          "reason": "Orphaned file"
+        }
+      ],
+      "importedBy": [],
+      "summary": "Orphaned - not imported by any file"
+    },
+    "pages/home/children/reports/ActiveSupplements": {
+      "file": "pages/home/children/reports/ActiveSupplements",
+      "isOrphaned": false,
+      "chains": [
+        {
+          "path": [
+            "pages/home/children/reports/ActiveSupplements",
+            "pages/home/children/reports/SupplementHistory"
+          ],
+          "rootFile": "pages/home/children/reports/SupplementHistory",
+          "isRootReachable": false,
+          "chainLength": 2,
+          "reason": "Entire chain unreachable"
+        }
+      ],
+      "importedBy": [
+        "pages/home/children/reports/SupplementHistory"
+      ],
+      "summary": "Transitive dead code - 1 chain(s), max depth 2"
+    },
+    "pages/home/children/reports/ProtocolSummary": {
+      "file": "pages/home/children/reports/ProtocolSummary",
+      "isOrphaned": false,
+      "chains": [
+        {
+          "path": [
+            "pages/home/children/reports/ProtocolSummary",
+            "pages/home/children/reports/ReportDescription"
+          ],
+          "rootFile": "pages/home/children/reports/ReportDescription",
+          "isRootReachable": false,
+          "chainLength": 2,
+          "reason": "Entire chain unreachable"
+        }
+      ],
+      "importedBy": [
+        "pages/home/children/reports/ReportDescription"
+      ],
+      "summary": "Transitive dead code - 1 chain(s), max depth 2"
+    },
+    "pages/home/children/reports/NutritionSummary": {
+      "file": "pages/home/children/reports/NutritionSummary",
+      "isOrphaned": false,
+      "chains": [
+        {
+          "path": [
+            "pages/home/children/reports/NutritionSummary",
+            "pages/home/children/reports/ReportDescription"
+          ],
+          "rootFile": "pages/home/children/reports/ReportDescription",
+          "isRootReachable": false,
+          "chainLength": 2,
+          "reason": "Entire chain unreachable"
+        }
+      ],
+      "importedBy": [
+        "pages/home/children/reports/ReportDescription"
+      ],
+      "summary": "Transitive dead code - 1 chain(s), max depth 2"
+    },
+    "pages/home/children/reports/AdditionalData": {
+      "file": "pages/home/children/reports/AdditionalData",
+      "isOrphaned": true,
+      "chains": [
+        {
+          "path": [
+            "pages/home/children/reports/AdditionalData"
+          ],
+          "rootFile": "pages/home/children/reports/AdditionalData",
+          "isRootReachable": false,
+          "chainLength": 1,
+          "reason": "Orphaned file"
+        }
+      ],
+      "importedBy": [],
+      "summary": "Orphaned - not imported by any file"
+    },
+    "pages/home/children/reports/Macros": {
+      "file": "pages/home/children/reports/Macros",
+      "isOrphaned": true,
+      "chains": [
+        {
+          "path": [
+            "pages/home/children/reports/Macros"
+          ],
+          "rootFile": "pages/home/children/reports/Macros",
+          "isRootReachable": false,
+          "chainLength": 1,
+          "reason": "Orphaned file"
+        }
+      ],
+      "importedBy": [],
+      "summary": "Orphaned - not imported by any file"
+    },
+    "themes/SignInTheme": {
+      "file": "themes/SignInTheme",
+      "isOrphaned": true,
+      "chains": [
+        {
+          "path": [
+            "themes/SignInTheme"
+          ],
+          "rootFile": "themes/SignInTheme",
+          "isRootReachable": false,
+          "chainLength": 1,
+          "reason": "Orphaned file"
+        }
+      ],
+      "importedBy": [],
+      "summary": "Orphaned - not imported by any file"
+    },
+    "i18n": {
+      "file": "i18n",
+      "isOrphaned": true,
+      "chains": [
+        {
+          "path": [
+            "i18n"
+          ],
+          "rootFile": "i18n",
+          "isRootReachable": false,
+          "chainLength": 1,
+          "reason": "Orphaned file"
+        }
+      ],
+      "importedBy": [],
+      "summary": "Orphaned - not imported by any file"
+    }
+  },
+  "filesWithDynamicImports": []
+}

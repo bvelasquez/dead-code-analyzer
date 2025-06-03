@@ -1,0 +1,60 @@
+/* Custom extension styling */
+.file-extension {
+  background: #edf2f7;
+  color: #4a5568;
+  padding: 2px 6px;
+  border-radius: 3px;
+  font-size: 0.7em;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  margin-left: 8px;
+  flex-shrink: 0;
+  display: inline-block;
+  min-width: 26px;
+  text-align: center;
+}
+
+/* Override purple gradient with simpler styles */
+.file-extension {
+  background-color: #f0f0f0 !important;
+  color: #555 !important;
+  border-radius: 3px !important;
+}
+
+/* Common file extensions */
+.file-extension:is([title$=".js"]) {
+  background-color: #f7df1e !important;
+  color: #323330 !important;
+}
+
+.file-extension:is([title$=".ts"]) {
+  background-color: #3178c6 !important;
+  color: white !important;
+}
+
+.file-extension:is([title$=".jsx"]), .file-extension:is([title$=".tsx"]) {
+  background-color: #61dafb !important;
+  color: #282c34 !important;
+}
+
+.file-extension:is([title$=".css"]) {
+  background-color: #264de4 !important;
+  color: white !important;
+}
+
+.file-extension:is([title$=".html"]) {
+  background-color: #e34c26 !important;
+  color: white !important;
+}
+
+.file-extension:is([title$=".json"]) {
+  background-color: #f5f5f5 !important;
+  color: #333333 !important;
+}
+
+/* Fix the blue box with D */
+.file-extension:is([title$=".d.ts"]) {
+  background-color: #f0f0f0 !important;
+  color: #666666 !important;
+}

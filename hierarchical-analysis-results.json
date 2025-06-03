@@ -1,0 +1,73 @@
+{
+  "totalFiles": 5,
+  "reachableFiles": [
+    "public/app",
+    "server"
+  ],
+  "unreachableFiles": [
+    "hierarchical-analyzer-v2",
+    "hierarchical-analyzer",
+    "run-analysis-and-serve"
+  ],
+  "entryPoints": [
+    "server",
+    "public/app"
+  ],
+  "chainAnalysis": {
+    "hierarchical-analyzer-v2": {
+      "file": "hierarchical-analyzer-v2",
+      "isOrphaned": true,
+      "chains": [
+        {
+          "path": [
+            "hierarchical-analyzer-v2"
+          ],
+          "rootFile": "hierarchical-analyzer-v2",
+          "isRootReachable": false,
+          "chainLength": 1,
+          "reason": "Orphaned file"
+        }
+      ],
+      "importedBy": [],
+      "summary": "Orphaned - not imported by any file"
+    },
+    "hierarchical-analyzer": {
+      "file": "hierarchical-analyzer",
+      "isOrphaned": true,
+      "chains": [
+        {
+          "path": [
+            "hierarchical-analyzer"
+          ],
+          "rootFile": "hierarchical-analyzer",
+          "isRootReachable": false,
+          "chainLength": 1,
+          "reason": "Orphaned file"
+        }
+      ],
+      "importedBy": [],
+      "summary": "Orphaned - not imported by any file"
+    },
+    "run-analysis-and-serve": {
+      "file": "run-analysis-and-serve",
+      "isOrphaned": true,
+      "chains": [
+        {
+          "path": [
+            "run-analysis-and-serve"
+          ],
+          "rootFile": "run-analysis-and-serve",
+          "isRootReachable": false,
+          "chainLength": 1,
+          "reason": "Orphaned file"
+        }
+      ],
+      "importedBy": [],
+      "summary": "Orphaned - not imported by any file"
+    }
+  },
+  "filesWithDynamicImports": [
+    "hierarchical-analyzer-v2.js",
+    "hierarchical-analyzer.js"
+  ]
+}

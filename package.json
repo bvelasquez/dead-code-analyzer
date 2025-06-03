@@ -1,0 +1,17 @@
+{
+  "name": "dead-code-analyzer",
+  "version": "1.0.0",
+  "description": "Dead code analyzer for JavaScript/TypeScript projects",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "analyze": "node hierarchical-analyzer.js",
+    "dev": "nodemon server.js"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.10"
+  },
+  "engines": {
+    "node": ">=14.0.0"
+  }
+}

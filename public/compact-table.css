@@ -1,0 +1,286 @@
+/* Modern Table View Styling */
+.compact-table-container {
+  padding: 0 32px 32px;
+}
+
+.compact-table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  background-color: white;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+}
+
+.compact-table-header {
+  background: linear-gradient(to bottom, #f8f9fa, #f1f3f5);
+  font-weight: 600;
+  color: #1d1d1f;
+  text-align: left;
+}
+
+.compact-table th {
+  padding: 16px;
+  font-size: 14px;
+  border-bottom: 1px solid #e5e5e7;
+  background: linear-gradient(to bottom, #f8f9fa, #f1f3f5);
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
+.compact-table td {
+  padding: 12px 16px;
+  border-bottom: 1px solid #e5e5e7;
+  font-size: 14px;
+}
+
+.compact-table tr:hover {
+  background-color: #f8f9fa;
+}
+
+.compact-table tr:last-child td {
+  border-bottom: none;
+}
+
+.compact-table-category {
+  font-size: 18px;
+  padding: 24px 0 16px;
+  font-weight: 600;
+  color: #1d1d1f;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 8px;
+}
+
+.compact-table-category::before {
+  content: "";
+  width: 4px;
+  height: 20px;
+  border-radius: 2px;
+}
+
+.compact-table-category.high {
+  color: #d32f2f;
+  background: linear-gradient(135deg, #ff6b6b 0%, #ee5a52 100%);
+}
+
+.compact-table-category.medium {
+  color: #f57c00;
+  background: linear-gradient(135deg, #ffa726 0%, #fb8c00 100%);
+}
+
+.compact-table-category.low {
+  color: #388e3c;
+  background: linear-gradient(135deg, #66bb6a 0%, #4caf50 100%);
+}
+
+.compact-table-row {
+  transition: background-color 0.2s ease;
+}
+
+.compact-table-row.orphaned {
+  border-left: 4px solid #ff6b6b;
+}
+
+.compact-table-row.transitive {
+  border-left: 4px solid #ffa726;
+}
+
+.compact-table-row.false-positive {
+  border-left: 4px solid #66bb6a;
+}
+
+.compact-table-row.selected {
+  background-color: rgba(0, 122, 255, 0.05);
+  border-left: 4px solid #007aff;
+}
+
+.compact-table-row.selected:hover {
+  background-color: rgba(0, 122, 255, 0.08);
+}
+
+/* Enhanced file icon animations */
+.file-icon-small {
+  width: 28px;
+  height: 28px;
+  background: #f0f0f2;
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  margin-right: 12px;
+  position: relative;
+}
+
+.file-icon-small:hover {
+  transform: scale(1.1);
+  transition: transform 0.2s ease;
+}
+
+/* File type specific icons and colors */
+.file-icon-small[data-ext="js"] {
+  background: linear-gradient(135deg, #f7df1e 0%, #e6c200 100%);
+}
+
+.file-icon-small[data-ext="ts"] {
+  background: linear-gradient(135deg, #3178c6 0%, #235a97 100%);
+  color: white;
+}
+
+.file-icon-small[data-ext="jsx"] {
+  background: linear-gradient(135deg, #61dafb 0%, #21a3c4 100%);
+}
+
+.file-icon-small[data-ext="tsx"] {
+  background: linear-gradient(135deg, #61dafb 0%, #3178c6 100%);
+  color: white;
+}
+
+.file-checkbox-table {
+  margin-right: 12px;
+  width: 16px;
+  height: 16px;
+  accent-color: #007aff;
+}
+
+.file-checkbox-table:checked {
+  accent-color: #007aff;
+}
+
+.file-name-cell {
+  display: flex;
+  align-items: center;
+}
+
+.file-path-cell {
+  color: #5f6368;
+  font-family: "Courier New", monospace;
+  font-size: 13px;
+}
+
+.file-action-cell {
+  display: flex;
+  gap: 8px;
+  justify-content: flex-end;
+}
+
+.table-action-btn {
+  width: 28px;
+  height: 28px;
+  border: 1px solid #e5e5e7;
+  background: white;
+  border-radius: 4px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  transition: all 0.2s ease;
+}
+
+.table-action-btn:hover {
+  background: #f5f5f7;
+  border-color: #007aff;
+  transform: translateY(-1px);
+}
+
+/* Enhanced table row selection */
+.compact-table-row.selected {
+  background-color: rgba(0, 122, 255, 0.05);
+}
+
+.compact-table-row.selected td {
+  border-color: rgba(0, 122, 255, 0.2);
+}
+
+.compact-table-row:hover {
+  background-color: #f8f9fa;
+  cursor: pointer;
+}
+
+.compact-table-row.selected:hover {
+  background-color: rgba(0, 122, 255, 0.1);
+}
+
+/* Visual feedback when clicking table rows */
+.compact-table-row:active {
+  background-color: rgba(0, 122, 255, 0.15);
+}
+
+/* Emphasized checkbox in selected row */
+.compact-table-row.selected .file-checkbox-table {
+  transform: scale(1.1);
+}
+
+/* Improved accessibility for keyboard users */
+.compact-table-row:focus-within {
+  outline: 2px solid #007aff;
+  outline-offset: -2px;
+  position: relative;
+}
+
+/* Selected row left border accent */
+.compact-table-row.selected {
+  position: relative;
+}
+
+.compact-table-row.selected::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 3px;
+  background-color: #007aff;
+}
+
+/* Selection counter styles */
+.selection-counter {
+  display: inline-block;
+  padding: 4px 12px;
+  background: rgba(0, 122, 255, 0.1);
+  color: #007aff;
+  border-radius: 20px;
+  font-size: 14px;
+  font-weight: 600;
+  margin-left: 12px;
+}
+
+/* Improved select all checkbox */
+.select-all-checkbox {
+  width: 18px;
+  height: 18px;
+  accent-color: #007aff;
+}
+
+.select-all-checkbox:indeterminate {
+  accent-color: #007aff;
+}
+
+/* Highlighted header when selections are active */
+.compact-table-header.has-selections {
+  background: linear-gradient(to bottom, #f0f7ff, #e6f0ff);
+}
+
+/* Responsive table styling */
+@media (max-width: 768px) {
+  .compact-table {
+    font-size: 13px;
+  }
+
+  .file-icon-small {
+    width: 24px;
+    height: 24px;
+    font-size: 10px;
+  }
+
+  .table-action-btn {
+    width: 24px;
+    height: 24px;
+    font-size: 11px;
+  }
+}
