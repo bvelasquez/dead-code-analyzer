@@ -437,27 +437,46 @@ function analyzeHierarchical() {
       // If the import resolves to an index file, it's likely a barrel export
       if (actualFile && actualFile.includes("/index")) {
         // For reading the file, we need to add the extension back
-        const fileToRead = actualFile.endsWith("/index")
-          ? actualFile + ".js"
-          : actualFile;
-        const reExports = extractReExports(fileToRead);
-        if (reExports.length > 0) {
-          barrelExportsFound++;
-          console.log(
-            `  📦 Found barrel export: ${actualFile} re-exports ${reExports.length} files`,
-          );
+        // Try multiple extensions for TypeScript projects
+        let fileToRead = null;
+        const extensions = [".ts", ".tsx", ".js", ".jsx"];
 
-          // Add all re-exported files as dependencies
-          reExports.forEach((reExportPath) => {
-            const reExportActualFile = findActualFile(
-              reExportPath,
-              allFiles.map((f) => normalizeFileName(f)),
-            );
-            if (reExportActualFile && !allDependencies.includes(reExportPath)) {
-              allDependencies.push(reExportPath);
-              additionalDependenciesFromBarrels++;
+        if (actualFile.endsWith("/index")) {
+          // Try each extension until we find the file
+          for (const ext of extensions) {
+            const candidate = actualFile + ext;
+            if (fs.existsSync(candidate)) {
+              fileToRead = candidate;
+              break;
             }
-          });
+          }
+        } else {
+          fileToRead = actualFile;
+        }
+
+        if (fileToRead) {
+          const reExports = extractReExports(fileToRead);
+          if (reExports.length > 0) {
+            barrelExportsFound++;
+            console.log(
+              `  📦 Found barrel export: ${actualFile} re-exports ${reExports.length} files`,
+            );
+
+            // Add all re-exported files as dependencies
+            reExports.forEach((reExportPath) => {
+              const reExportActualFile = findActualFile(
+                reExportPath,
+                allFiles.map((f) => normalizeFileName(f)),
+              );
+              if (
+                reExportActualFile &&
+                !allDependencies.includes(reExportPath)
+              ) {
+                allDependencies.push(reExportPath);
+                additionalDependenciesFromBarrels++;
+              }
+            });
+          }
         }
       }
     });

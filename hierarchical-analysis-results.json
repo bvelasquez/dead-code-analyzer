@@ -1,12 +1,13 @@
 {
-  "totalFiles": 5,
+  "totalFiles": 6,
   "reachableFiles": [
     "public/app",
     "server"
   ],
   "unreachableFiles": [
     "hierarchical-analyzer-v2",
-    "hierarchical-analyzer",
+    "debug-organization",
+    "full-debug",
     "run-analysis-and-serve"
   ],
   "entryPoints": [
@@ -16,13 +17,33 @@
   "chainAnalysis": {
     "hierarchical-analyzer-v2": {
       "file": "hierarchical-analyzer-v2",
+      "isOrphaned": false,
+      "chains": [
+        {
+          "path": [
+            "hierarchical-analyzer-v2",
+            "full-debug"
+          ],
+          "rootFile": "full-debug",
+          "isRootReachable": false,
+          "chainLength": 2,
+          "reason": "Entire chain unreachable"
+        }
+      ],
+      "importedBy": [
+        "full-debug"
+      ],
+      "summary": "Transitive dead code - 1 chain(s), max depth 2"
+    },
+    "debug-organization": {
+      "file": "debug-organization",
       "isOrphaned": true,
       "chains": [
         {
           "path": [
-            "hierarchical-analyzer-v2"
+            "debug-organization"
           ],
-          "rootFile": "hierarchical-analyzer-v2",
+          "rootFile": "debug-organization",
           "isRootReachable": false,
           "chainLength": 1,
           "reason": "Orphaned file"
@@ -31,15 +52,15 @@
       "importedBy": [],
       "summary": "Orphaned - not imported by any file"
     },
-    "hierarchical-analyzer": {
-      "file": "hierarchical-analyzer",
+    "full-debug": {
+      "file": "full-debug",
       "isOrphaned": true,
       "chains": [
         {
           "path": [
-            "hierarchical-analyzer"
+            "full-debug"
           ],
-          "rootFile": "hierarchical-analyzer",
+          "rootFile": "full-debug",
           "isRootReachable": false,
           "chainLength": 1,
           "reason": "Orphaned file"
@@ -67,7 +88,6 @@
     }
   },
   "filesWithDynamicImports": [
-    "hierarchical-analyzer-v2.js",
-    "hierarchical-analyzer.js"
+    "hierarchical-analyzer-v2.js"
   ]
 }
