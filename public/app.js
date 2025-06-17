@@ -1383,19 +1383,19 @@ function updateQuickTargetsDropdown() {
 
   // Add predefined common directories
   const commonGroup = document.createElement("optgroup");
-  commonGroup.label = "🚀 Common Projects";
+  commonGroup.label = "🚀 Example Projects";
 
   const commonDirs = [
     {
-      path: "/Users/barryvelasquez/projects/mighty45-web/apps/coach-console",
-      name: "coach-console",
+      path: "/path/to/your/project/frontend",
+      name: "frontend-app",
     },
     {
-      path: "/Users/barryvelasquez/projects/mighty45-web/apps/m45-admin",
-      name: "m45-admin",
+      path: "/path/to/your/project/backend",
+      name: "backend-api",
     },
     {
-      path: "/Users/barryvelasquez/projects/mighty45-web",
+      path: "/path/to/your/project",
       name: "entire project",
     },
   ];

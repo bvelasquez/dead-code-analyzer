@@ -111,6 +111,10 @@ graph LR
 - Node.js 14.0.0 or higher
 - JavaScript/TypeScript project
 
+## 🔒 Security Note
+
+**Analysis results may contain sensitive project information.** The analyzer creates JSON files with your project's file structure and dependencies. These files are automatically excluded from git via `.gitignore`. Review the `sample-analysis-results.json` file to understand what data is collected.
+
 ### Installation
 
 1. Clone the repository:

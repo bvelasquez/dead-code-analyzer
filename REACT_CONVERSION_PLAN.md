@@ -188,7 +188,7 @@ react-dashboard/src/
 1. **Create React App**:
 
    ```bash
-   cd /Users/barryvelasquez/projects/dead-code-analyzer
+   cd /path/to/your/dead-code-analyzer
    npx create-react-app react-dashboard --template typescript
    cd react-dashboard
    npm install @types/node
@@ -334,7 +334,7 @@ _Much faster than the 2-3 week migration approach!_
 ### Step 1: Create React App
 
 ```bash
-cd /Users/barryvelasquez/projects/dead-code-analyzer
+cd /path/to/your/dead-code-analyzer
 npx create-react-app react-dashboard --template typescript
 cd react-dashboard
 npm install tailwindcss @headlessui/react react-virtualized

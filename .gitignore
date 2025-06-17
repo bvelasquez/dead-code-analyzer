@@ -53,3 +53,8 @@ build/
 
 # VS Code settings
 .vscode/
+
+# Analysis results (may contain sensitive project data)
+analysis-results.json
+hierarchical-analysis-results.json
+*-analysis-results.json
